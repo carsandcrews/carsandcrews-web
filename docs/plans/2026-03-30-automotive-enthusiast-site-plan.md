@@ -8,7 +8,15 @@
 
 **Tech Stack:** Next.js 15, React 19, TypeScript, Tailwind v4, Supabase (Auth + DB + Realtime), Cloudflare R2, Vitest, Testing Library, Playwright, GitHub Actions.
 
-**Spec:** `docs/superpowers/specs/2026-03-30-automotive-enthusiast-site-design.md`
+**Spec:** `docs/specs/2026-03-30-automotive-enthusiast-site-design.md`
+
+**Conventions:** `CONVENTIONS.md` (root) — color tokens, component patterns, testing conventions, file naming. Living document — update as decisions are made.
+
+**Overview:** `docs/specs/2026-03-30-automotive-enthusiast-site-overview.md`
+
+**Mockups:** `docs/mockups/` — HTML mockups from brainstorming. Open in a browser to view. Key files:
+- `landing-c-v4.html` — Final landing page direction (desktop + mobile)
+- `color-palettes-light.html` — Dark/light palette comparisons (Palette E was chosen)
 
 ---
 
