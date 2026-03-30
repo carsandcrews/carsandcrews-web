@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option C — v3</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #080810; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+  .device-frame { display: inline-block; vertical-align: top; margin: 0 16px; }
+  .device-label { text-align: center; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+  .desktop-frame { width: 780px; background: #0a0a12; border-radius: 12px; overflow: hidden; border: 1px solid #1a1a2a; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .mobile-frame { width: 375px; background: #0a0a12; border-radius: 28px; overflow: hidden; border: 3px solid #2a2a3a; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .mobile-notch { height: 28px; background: #0a0a12; display: flex; align-items: center; justify-content: center; }
+  .mobile-notch-pill { width: 80px; height: 6px; background: #1a1a2a; border-radius: 3px; }
+  .page-wrap { display: flex; justify-content: center; align-items: flex-start; padding: 32px 16px; gap: 32px; flex-wrap: wrap; }
+  h1.page-title { text-align: center; font-size: 22px; font-weight: 800; color: #fff; padding: 28px 16px 4px; }
+  p.page-sub { text-align: center; font-size: 13px; color: #888; padding: 0 16px 8px; max-width: 600px; margin: 0 auto; }
+
+  /* Photo container — handles mixed aspect ratios */
+  .photo-contain {
+    position: relative;
+    overflow: hidden;
+    background: #15151f;
+  }
+  .photo-contain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(10,10,18,0.85) 100%);
+    pointer-events: none;
+  }
+  /* Simulated user photos — gradient placeholders representing mixed quality uploads */
+  .photo-landscape { aspect-ratio: 16/9; border-radius: 14px; }
+  .photo-square { aspect-ratio: 1; border-radius: 14px; }
+  .photo-thumb { width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">Option C — v3</h1>
+<p class="page-sub">No vanity counts. Varied layout rhythm. Photo containers designed for mixed-quality uploads.</p>
+
+<div class="page-wrap">
+
+<!-- ==================== DESKTOP ==================== -->
+<div class="device-frame">
+  <div class="device-label">Desktop</div>
+  <div class="desktop-frame">
+
+    <!-- Nav -->
+    <div style="padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06);">
+      <div style="display: flex; align-items: center; gap: 28px;">
+        <div style="font-size: 18px; font-weight: 800; color: white; letter-spacing: -0.5px;">[BRAND]</div>
+        <div style="display: flex; gap: 20px;">
+          <div style="font-size: 13px; color: #ddd; font-weight: 500;">Events</div>
+          <div style="font-size: 13px; color: #666;">Vehicles</div>
+          <div style="font-size: 13px; color: #666;">Community</div>
+          <div style="font-size: 13px; color: #666;">Map</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="font-size: 13px; color: #888;">&#128269;</div>
+        <div style="background: #f59e0b; color: #000; padding: 7px 18px; border-radius: 20px; font-size: 12px; font-weight: 600;">Sign Up</div>
+      </div>
+    </div>
+
+    <!-- Featured strip — two cards only, no count box -->
+    <div style="padding: 20px 28px 12px; display: flex; gap: 14px;">
+
+      <!-- Featured event with photo -->
+      <div style="flex: 1.2; border-radius: 20px; overflow: hidden; position: relative; min-height: 160px; background: linear-gradient(145deg, #151530, #0f2040);">
+        <!-- Simulated event flyer/photo -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #1a1a3e 0%, #1e3a5f 40%, #0f2847 100%); opacity: 0.8;"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,18,0.95) 0%, rgba(10,10,18,0.3) 60%, transparent 100%);"></div>
+        <div style="position: relative; z-index: 1; padding: 22px; display: flex; flex-direction: column; justify-content: flex-end; min-height: 160px;">
+          <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 2.5px; color: #f59e0b; margin-bottom: 8px; font-weight: 600;">This Weekend</div>
+          <div style="font-size: 22px; font-weight: 800; color: white; line-height: 1.15; margin-bottom: 6px;">Cars & Coffee at The Domain</div>
+          <div style="font-size: 12px; color: #aaa; margin-bottom: 14px;">Sunday 8am &middot; Austin, TX</div>
+          <div style="display: flex; gap: 8px;">
+            <div style="background: #f59e0b; color: #000; padding: 8px 18px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-block;">I'm Going</div>
+            <div style="background: rgba(255,255,255,0.08); color: #ccc; padding: 8px 18px; border-radius: 20px; font-size: 11px; display: inline-block;">Details</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured vehicle with photo area -->
+      <div style="flex: 1; border-radius: 20px; overflow: hidden; position: relative; min-height: 160px; background: #12121e;">
+        <!-- Simulated user-uploaded photo — landscape, slightly dark/imperfect -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(165deg, #2a2020 0%, #3a2525 30%, #1a1520 70%, #151520 100%); opacity: 0.9;"></div>
+        <!-- Quality-normalizing overlay -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,18,0.95) 0%, rgba(10,10,18,0.2) 55%, rgba(10,10,18,0.1) 100%);"></div>
+        <div style="position: relative; z-index: 1; padding: 22px; display: flex; flex-direction: column; justify-content: flex-end; min-height: 160px;">
+          <div style="font-size: 9px; text-transform: uppercase; letter-spacing: 2.5px; color: #60a5fa; margin-bottom: 8px; font-weight: 600;">Trending Build</div>
+          <div style="font-size: 20px; font-weight: 800; color: white; line-height: 1.2; margin-bottom: 4px;">'69 Camaro SS</div>
+          <div style="font-size: 12px; color: #aaa;">Full restore by @mike_builds</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search bar — pill -->
+    <div style="padding: 8px 28px 18px;">
+      <div style="background: #12121e; border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 13px 20px; display: flex; align-items: center; gap: 10px;">
+        <div style="color: #555; font-size: 15px;">&#128269;</div>
+        <div style="color: #444; font-size: 14px; flex: 1;">Search events, vehicles, or people...</div>
+        <div style="width: 1px; height: 18px; background: rgba(255,255,255,0.06);"></div>
+        <div style="color: #555; font-size: 13px;">&#128205; Austin, TX</div>
+      </div>
+    </div>
+
+    <!-- Tabs — pill style -->
+    <div style="padding: 0 28px 14px; display: flex; gap: 6px;">
+      <div style="background: rgba(245,158,11,0.12); color: #f59e0b; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;">All</div>
+      <div style="color: #555; padding: 6px 16px; border-radius: 20px; font-size: 12px;">Events</div>
+      <div style="color: #555; padding: 6px 16px; border-radius: 20px; font-size: 12px;">Vehicles</div>
+      <div style="color: #555; padding: 6px 16px; border-radius: 20px; font-size: 12px;">People</div>
+      <div style="color: #555; padding: 6px 16px; border-radius: 20px; font-size: 12px;">Clubs</div>
+    </div>
+
+    <!-- FEED — varied layout rhythm, not uniform rows -->
+    <div style="padding: 0 28px 28px;">
+
+      <!-- Row 1: compact event -->
+      <div style="display: flex; gap: 14px; background: #12121e; border-radius: 16px; padding: 14px 16px; align-items: center; margin-bottom: 8px;">
+        <div style="width: 52px; height: 52px; background: linear-gradient(145deg, #2d1b69, #11998e); border-radius: 14px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; font-weight: 600;">Apr</div>
+          <div style="font-size: 19px; font-weight: 800; color: white; line-height: 1;">5</div>
+        </div>
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+            <div style="font-size: 10px; color: #4ade80; font-weight: 600;">EVENT</div>
+            <div style="width: 3px; height: 3px; background: #333; border-radius: 50%;"></div>
+            <div style="font-size: 10px; color: #555;">Cruise-In</div>
+          </div>
+          <div style="font-size: 14px; font-weight: 600; color: white;">Saturday Cruise-In at Sonic</div>
+          <div style="font-size: 11px; color: #777; margin-top: 2px;">Tomorrow 6pm &middot; Round Rock, TX</div>
+        </div>
+        <div style="background: rgba(245,158,11,0.1); color: #f59e0b; padding: 6px 14px; border-radius: 16px; font-size: 11px; font-weight: 600; cursor: pointer; flex-shrink: 0;">RSVP</div>
+      </div>
+
+      <!-- Row 2: VEHICLE CARD — photo-forward, breaks the row rhythm -->
+      <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+        <div style="flex: 1; background: #12121e; border-radius: 16px; overflow: hidden;">
+          <!-- User photo — landscape, simulated phone quality -->
+          <div style="aspect-ratio: 16/10; position: relative; overflow: hidden;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #3a2828 0%, #4a2020 30%, #2a1a1a 70%, #1a1218 100%);"></div>
+            <!-- Subtle vignette to normalize edges -->
+            <div style="position: absolute; inset: 0; box-shadow: inset 0 0 40px rgba(0,0,0,0.4);"></div>
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 14px; background: linear-gradient(to top, rgba(10,10,18,0.9), transparent);">
+              <div style="font-size: 10px; color: #60a5fa; font-weight: 600; margin-bottom: 2px;">VEHICLE</div>
+              <div style="font-size: 14px; font-weight: 600; color: white;">'57 Bel Air — Survivor</div>
+            </div>
+          </div>
+          <div style="padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 11px; color: #777;">@classic_joe &middot; Austin, TX</div>
+            <div style="font-size: 11px; color: #60a5fa; font-weight: 600; cursor: pointer;">View Build &rarr;</div>
+          </div>
+        </div>
+
+        <div style="flex: 1; background: #12121e; border-radius: 16px; overflow: hidden;">
+          <!-- User photo — slightly different aspect, phone-quality -->
+          <div style="aspect-ratio: 16/10; position: relative; overflow: hidden;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(150deg, #1a2a1a 0%, #2a3a2a 30%, #1a2818 60%, #121a12 100%);"></div>
+            <div style="position: absolute; inset: 0; box-shadow: inset 0 0 40px rgba(0,0,0,0.4);"></div>
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 14px; background: linear-gradient(to top, rgba(10,10,18,0.9), transparent);">
+              <div style="font-size: 10px; color: #60a5fa; font-weight: 600; margin-bottom: 2px;">VEHICLE</div>
+              <div style="font-size: 14px; font-weight: 600; color: white;">'92 NSX — JDM Spec</div>
+            </div>
+          </div>
+          <div style="padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 11px; color: #777;">@jdm_life &middot; Dallas, TX</div>
+            <div style="font-size: 11px; color: #60a5fa; font-weight: 600; cursor: pointer;">View Build &rarr;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: compact event -->
+      <div style="display: flex; gap: 14px; background: #12121e; border-radius: 16px; padding: 14px 16px; align-items: center; margin-bottom: 8px;">
+        <div style="width: 52px; height: 52px; background: linear-gradient(145deg, #c0392b, #e74c3c); border-radius: 14px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 8px; color: rgba(255,255,255,0.5); text-transform: uppercase; font-weight: 600;">Apr</div>
+          <div style="font-size: 19px; font-weight: 800; color: white; line-height: 1;">6</div>
+        </div>
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 3px;">
+            <div style="font-size: 10px; color: #4ade80; font-weight: 600;">EVENT</div>
+            <div style="width: 3px; height: 3px; background: #333; border-radius: 50%;"></div>
+            <div style="font-size: 10px; color: #555;">Cars & Coffee</div>
+          </div>
+          <div style="font-size: 14px; font-weight: 600; color: white;">Cars & Coffee — The Domain</div>
+          <div style="font-size: 11px; color: #777; margin-top: 2px;">Sunday 8am &middot; Austin, TX</div>
+        </div>
+        <div style="background: rgba(245,158,11,0.1); color: #f59e0b; padding: 6px 14px; border-radius: 16px; font-size: 11px; font-weight: 600; cursor: pointer; flex-shrink: 0;">RSVP</div>
+      </div>
+
+      <!-- Row 4: member + context — not a full-width bar -->
+      <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+        <div style="flex: 1; background: #12121e; border-radius: 16px; padding: 16px; display: flex; gap: 14px; align-items: center;">
+          <div style="width: 44px; height: 44px; background: linear-gradient(145deg, #2a2a3a, #3a3a4a); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <div style="font-size: 17px; color: #888;">&#128100;</div>
+          </div>
+          <div>
+            <div style="font-size: 10px; color: #fbbf24; font-weight: 600; margin-bottom: 2px;">NEW MEMBER</div>
+            <div style="font-size: 13px; font-weight: 600; color: white;">@lone_star_garage</div>
+            <div style="font-size: 10px; color: #777;">Muscle cars &middot; San Antonio</div>
+          </div>
+        </div>
+        <div style="flex: 1; background: #12121e; border-radius: 16px; padding: 16px; display: flex; gap: 14px; align-items: center;">
+          <div style="width: 44px; height: 44px; background: linear-gradient(145deg, #2a2a3a, #3a3a4a); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <div style="font-size: 17px; color: #888;">&#128100;</div>
+          </div>
+          <div>
+            <div style="font-size: 10px; color: #fbbf24; font-weight: 600; margin-bottom: 2px;">NEW MEMBER</div>
+            <div style="font-size: 13px; font-weight: 600; color: white;">@jdm_life</div>
+            <div style="font-size: 10px; color: #777;">JDM enthusiast &middot; Austin</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 5: event with photo — wider card, single -->
+      <div style="background: #12121e; border-radius: 16px; overflow: hidden; margin-bottom: 8px;">
+        <div style="display: flex;">
+          <!-- Event flyer/photo left side -->
+          <div style="width: 240px; position: relative; overflow: hidden; flex-shrink: 0;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #1a2a4a 0%, #2a3a5a 40%, #0f1a2a 100%);"></div>
+            <div style="position: absolute; inset: 0; box-shadow: inset 0 0 30px rgba(0,0,0,0.3);"></div>
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+              <div style="font-size: 9px; color: rgba(255,255,255,0.15); text-transform: uppercase; letter-spacing: 1px;">[event flyer]</div>
+            </div>
+          </div>
+          <!-- Event details right -->
+          <div style="flex: 1; padding: 18px 20px;">
+            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+              <div style="font-size: 10px; color: #4ade80; font-weight: 600;">EVENT</div>
+              <div style="width: 3px; height: 3px; background: #333; border-radius: 50%;"></div>
+              <div style="font-size: 10px; color: #555;">Car Show</div>
+            </div>
+            <div style="font-size: 17px; font-weight: 700; color: white; margin-bottom: 4px;">Lone Star Nationals</div>
+            <div style="font-size: 12px; color: #888; margin-bottom: 4px;">April 12-13 &middot; Texas Motor Speedway</div>
+            <div style="font-size: 11px; color: #666; margin-bottom: 14px;">Two-day judged show featuring 500+ vehicles across 30 classes. Live music, vendor village, and kids' zone.</div>
+            <div style="display: flex; gap: 8px;">
+              <div style="background: rgba(245,158,11,0.1); color: #f59e0b; padding: 6px 14px; border-radius: 16px; font-size: 11px; font-weight: 600; cursor: pointer;">RSVP</div>
+              <div style="background: rgba(255,255,255,0.05); color: #888; padding: 6px 14px; border-radius: 16px; font-size: 11px; cursor: pointer;">Share</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 6: vehicle photo card — single wide -->
+      <div style="background: #12121e; border-radius: 16px; overflow: hidden;">
+        <!-- Wide landscape photo -->
+        <div style="aspect-ratio: 21/9; position: relative; overflow: hidden;">
+          <div style="position: absolute; inset: 0; background: linear-gradient(155deg, #2a2a1a 0%, #3a3520 25%, #2a2815 50%, #1a1a10 100%);"></div>
+          <div style="position: absolute; inset: 0; box-shadow: inset 0 0 60px rgba(0,0,0,0.3);"></div>
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 18px; background: linear-gradient(to top, rgba(10,10,18,0.95) 0%, rgba(10,10,18,0.4) 70%, transparent 100%);">
+            <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+              <div>
+                <div style="font-size: 10px; color: #60a5fa; font-weight: 600; margin-bottom: 3px;">VEHICLE</div>
+                <div style="font-size: 17px; font-weight: 700; color: white;">'70 Chevelle SS 454</div>
+                <div style="font-size: 12px; color: #aaa;">@big_block_tony &middot; Houston, TX &middot; Restored</div>
+              </div>
+              <div style="font-size: 11px; color: #60a5fa; font-weight: 600; cursor: pointer; flex-shrink: 0;">View Build &rarr;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MOBILE ==================== -->
+<div class="device-frame">
+  <div class="device-label">Mobile</div>
+  <div class="mobile-frame">
+    <div class="mobile-notch"><div class="mobile-notch-pill"></div></div>
+
+    <!-- Mobile nav -->
+    <div style="padding: 10px 18px; display: flex; align-items: center; justify-content: space-between;">
+      <div style="font-size: 16px; font-weight: 800; color: white;">[BRAND]</div>
+      <div style="display: flex; gap: 14px; align-items: center;">
+        <div style="font-size: 14px; color: #888;">&#128269;</div>
+        <div style="width: 28px; height: 28px; background: #f59e0b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #000; font-weight: 700;">+</div>
+      </div>
+    </div>
+
+    <!-- Mobile featured — single card with photo overlay -->
+    <div style="padding: 6px 18px 10px;">
+      <div style="border-radius: 18px; overflow: hidden; position: relative; min-height: 130px; background: #12121e;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #1a1a3e 0%, #1e3a5f 40%, #0f2847 100%); opacity: 0.8;"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,18,0.95) 0%, rgba(10,10,18,0.2) 60%, transparent 100%);"></div>
+        <div style="position: relative; z-index: 1; padding: 18px; display: flex; flex-direction: column; justify-content: flex-end; min-height: 130px;">
+          <div style="font-size: 8px; text-transform: uppercase; letter-spacing: 2px; color: #f59e0b; margin-bottom: 6px; font-weight: 600;">This Weekend</div>
+          <div style="font-size: 17px; font-weight: 800; color: white; line-height: 1.15; margin-bottom: 4px;">Cars & Coffee at The Domain</div>
+          <div style="font-size: 11px; color: #aaa; margin-bottom: 10px;">Sunday 8am &middot; Austin, TX</div>
+          <div style="display: flex; gap: 6px;">
+            <div style="background: #f59e0b; color: #000; padding: 6px 14px; border-radius: 14px; font-size: 10px; font-weight: 700;">I'm Going</div>
+            <div style="background: rgba(255,255,255,0.08); color: #ccc; padding: 6px 14px; border-radius: 14px; font-size: 10px;">Details</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile search -->
+    <div style="padding: 2px 18px 10px;">
+      <div style="background: #12121e; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 10px 16px; display: flex; align-items: center; gap: 8px;">
+        <div style="color: #555; font-size: 13px;">&#128269;</div>
+        <div style="color: #444; font-size: 12px; flex: 1;">Search...</div>
+        <div style="color: #555; font-size: 11px;">&#128205; Austin</div>
+      </div>
+    </div>
+
+    <!-- Mobile tabs -->
+    <div style="padding: 0 18px 10px; display: flex; gap: 6px; overflow: hidden;">
+      <div style="background: rgba(245,158,11,0.12); color: #f59e0b; padding: 5px 14px; border-radius: 16px; font-size: 11px; font-weight: 600; flex-shrink: 0;">All</div>
+      <div style="color: #555; padding: 5px 14px; border-radius: 16px; font-size: 11px; flex-shrink: 0;">Events</div>
+      <div style="color: #555; padding: 5px 14px; border-radius: 16px; font-size: 11px; flex-shrink: 0;">Vehicles</div>
+      <div style="color: #555; padding: 5px 14px; border-radius: 16px; font-size: 11px; flex-shrink: 0;">People</div>
+    </div>
+
+    <!-- Mobile feed — varied -->
+    <div style="padding: 0 18px 14px; display: flex; flex-direction: column; gap: 6px;">
+
+      <!-- Compact event -->
+      <div style="display: flex; gap: 12px; background: #12121e; border-radius: 14px; padding: 12px; align-items: center;">
+        <div style="width: 44px; height: 44px; background: linear-gradient(145deg, #2d1b69, #11998e); border-radius: 12px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 7px; color: rgba(255,255,255,0.5); text-transform: uppercase;">Apr</div>
+          <div style="font-size: 16px; font-weight: 800; color: white; line-height: 1;">5</div>
+        </div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 9px; color: #4ade80; font-weight: 600; margin-bottom: 2px;">EVENT</div>
+          <div style="font-size: 13px; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Saturday Cruise-In at Sonic</div>
+          <div style="font-size: 10px; color: #777;">Tomorrow 6pm &middot; Round Rock</div>
+        </div>
+        <div style="background: rgba(245,158,11,0.1); color: #f59e0b; padding: 5px 10px; border-radius: 12px; font-size: 10px; font-weight: 600;">RSVP</div>
+      </div>
+
+      <!-- Vehicle photo card — full width on mobile -->
+      <div style="background: #12121e; border-radius: 14px; overflow: hidden;">
+        <div style="aspect-ratio: 16/10; position: relative; overflow: hidden;">
+          <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #3a2828 0%, #4a2020 30%, #2a1a1a 70%, #1a1218 100%);"></div>
+          <div style="position: absolute; inset: 0; box-shadow: inset 0 0 30px rgba(0,0,0,0.4);"></div>
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 12px; background: linear-gradient(to top, rgba(10,10,18,0.9), transparent);">
+            <div style="font-size: 9px; color: #60a5fa; font-weight: 600;">VEHICLE</div>
+            <div style="font-size: 13px; font-weight: 600; color: white;">'57 Bel Air — Survivor</div>
+          </div>
+        </div>
+        <div style="padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 10px; color: #777;">@classic_joe</div>
+          <div style="font-size: 10px; color: #60a5fa; font-weight: 600;">View &rarr;</div>
+        </div>
+      </div>
+
+      <!-- Compact event -->
+      <div style="display: flex; gap: 12px; background: #12121e; border-radius: 14px; padding: 12px; align-items: center;">
+        <div style="width: 44px; height: 44px; background: linear-gradient(145deg, #c0392b, #e74c3c); border-radius: 12px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <div style="font-size: 7px; color: rgba(255,255,255,0.5); text-transform: uppercase;">Apr</div>
+          <div style="font-size: 16px; font-weight: 800; color: white; line-height: 1;">6</div>
+        </div>
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 9px; color: #4ade80; font-weight: 600; margin-bottom: 2px;">EVENT</div>
+          <div style="font-size: 13px; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Cars & Coffee — The Domain</div>
+          <div style="font-size: 10px; color: #777;">Sunday 8am &middot; Austin</div>
+        </div>
+        <div style="background: rgba(245,158,11,0.1); color: #f59e0b; padding: 5px 10px; border-radius: 12px; font-size: 10px; font-weight: 600;">RSVP</div>
+      </div>
+
+      <!-- Member row — compact pair -->
+      <div style="display: flex; gap: 6px;">
+        <div style="flex: 1; background: #12121e; border-radius: 14px; padding: 12px; display: flex; gap: 10px; align-items: center;">
+          <div style="width: 34px; height: 34px; background: linear-gradient(145deg, #2a2a3a, #3a3a4a); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #888;">&#128100;</div>
+          <div style="min-width: 0;">
+            <div style="font-size: 11px; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@lone_star</div>
+            <div style="font-size: 9px; color: #777;">Muscle cars</div>
+          </div>
+        </div>
+        <div style="flex: 1; background: #12121e; border-radius: 14px; padding: 12px; display: flex; gap: 10px; align-items: center;">
+          <div style="width: 34px; height: 34px; background: linear-gradient(145deg, #2a2a3a, #3a3a4a); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #888;">&#128100;</div>
+          <div style="min-width: 0;">
+            <div style="font-size: 11px; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@jdm_life</div>
+            <div style="font-size: 9px; color: #777;">JDM builds</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mobile bottom nav -->
+    <div style="padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-around; background: #0a0a12;">
+      <div style="text-align: center;"><div style="font-size: 16px; margin-bottom: 2px;">&#127968;</div><div style="font-size: 9px; color: #f59e0b; font-weight: 600;">Home</div></div>
+      <div style="text-align: center;"><div style="font-size: 16px; margin-bottom: 2px;">&#128197;</div><div style="font-size: 9px; color: #555;">Events</div></div>
+      <div style="text-align: center;"><div style="font-size: 16px; margin-bottom: 2px;">&#128663;</div><div style="font-size: 9px; color: #555;">Vehicles</div></div>
+      <div style="text-align: center;"><div style="font-size: 16px; margin-bottom: 2px;">&#128101;</div><div style="font-size: 9px; color: #555;">Community</div></div>
+      <div style="text-align: center;"><div style="font-size: 16px; margin-bottom: 2px;">&#128100;</div><div style="font-size: 9px; color: #555;">Profile</div></div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</body>
+</html>

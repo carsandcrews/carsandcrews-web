@@ -1,0 +1,163 @@
+<h2>Landing Page Vibe: Which direction feels right?</h2>
+<p class="subtitle">Click the one that matches the energy you want for the site. These are conceptual — not final designs.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)" style="border: 2px solid #f59e0b;">
+    <div class="card-image">
+      <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding: 24px; min-height: 280px; position: relative; overflow: hidden;">
+        <!-- Hero image area -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)); z-index: 1;"></div>
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; color: white; text-align: center;">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 3px; color: #f59e0b; margin-bottom: 8px;">This Weekend in Austin</div>
+          <div style="font-size: 28px; font-weight: 800; line-height: 1.1; margin-bottom: 12px;">Cars & Coffee<br>at The Domain</div>
+          <div style="font-size: 13px; color: #ccc; margin-bottom: 16px;">342 going &middot; Saturday 8am</div>
+          <div style="display: flex; gap: 8px;">
+            <div style="background: #f59e0b; color: #000; padding: 8px 20px; border-radius: 6px; font-weight: 600; font-size: 13px;">I'm Going</div>
+            <div style="border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 20px; border-radius: 6px; font-size: 13px;">Browse All Events</div>
+          </div>
+        </div>
+        <!-- Simulated car silhouettes -->
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(to right, #1a1a2e, #0f3460, #1a1a2e); z-index: 0; display: flex; align-items: flex-end; justify-content: center; gap: 40px; padding-bottom: 8px;">
+          <div style="width: 80px; height: 25px; background: rgba(255,255,255,0.08); border-radius: 4px 4px 0 0;"></div>
+          <div style="width: 90px; height: 30px; background: rgba(255,255,255,0.06); border-radius: 6px 6px 0 0;"></div>
+          <div style="width: 70px; height: 22px; background: rgba(255,255,255,0.08); border-radius: 4px 4px 0 0;"></div>
+        </div>
+      </div>
+      <!-- Below the fold preview -->
+      <div style="background: #111; padding: 16px; border-top: 1px solid #222;">
+        <div style="display: flex; gap: 12px;">
+          <div style="flex: 1; background: #1a1a1a; border-radius: 8px; padding: 12px;">
+            <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Nearby Events</div>
+            <div style="font-size: 20px; font-weight: 700; color: white; margin-top: 4px;">24</div>
+            <div style="font-size: 11px; color: #666;">this week</div>
+          </div>
+          <div style="flex: 1; background: #1a1a1a; border-radius: 8px; padding: 12px;">
+            <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Vehicles</div>
+            <div style="font-size: 20px; font-weight: 700; color: white; margin-top: 4px;">1.2K</div>
+            <div style="font-size: 11px; color: #666;">showcased</div>
+          </div>
+          <div style="flex: 1; background: #1a1a1a; border-radius: 8px; padding: 12px;">
+            <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px;">Community</div>
+            <div style="font-size: 20px; font-weight: 700; color: white; margin-top: 4px;">890</div>
+            <div style="font-size: 11px; color: #666;">members</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Media-Rich Hero + Utility Below <span style="background: #f59e0b; color: #000; font-size: 10px; padding: 2px 8px; border-radius: 4px; margin-left: 8px;">RECOMMENDED</span></h3>
+      <p>Big, cinematic featured event hero that sets the mood. Scroll down and you immediately hit utility — nearby events, quick stats, search. Emotional hook up top, practical value underneath.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Visual impact draws people in</li><li>Featured events drive engagement</li><li>Feels premium and curated</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Requires good hero content from day one</li><li>Utility is below the fold</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background: #0a0a0a; padding: 20px; min-height: 280px;">
+        <!-- Search-first layout -->
+        <div style="text-align: center; padding-top: 20px;">
+          <div style="font-size: 22px; font-weight: 800; color: white; margin-bottom: 4px;">What's happening near you?</div>
+          <div style="font-size: 13px; color: #888; margin-bottom: 16px;">Discover car shows, meets, and cruises</div>
+          <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 8px; max-width: 400px; margin: 0 auto 16px;">
+            <div style="color: #666; font-size: 14px;">&#128269;</div>
+            <div style="color: #555; font-size: 14px;">Austin, TX</div>
+            <div style="margin-left: auto; background: #f59e0b; color: #000; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;">Search</div>
+          </div>
+          <div style="display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+            <div style="background: #1a1a1a; border: 1px solid #333; padding: 4px 12px; border-radius: 20px; font-size: 11px; color: #ccc;">Cars & Coffee</div>
+            <div style="background: #1a1a1a; border: 1px solid #333; padding: 4px 12px; border-radius: 20px; font-size: 11px; color: #ccc;">Car Shows</div>
+            <div style="background: #1a1a1a; border: 1px solid #333; padding: 4px 12px; border-radius: 20px; font-size: 11px; color: #ccc;">Cruise-Ins</div>
+            <div style="background: #1a1a1a; border: 1px solid #333; padding: 4px 12px; border-radius: 20px; font-size: 11px; color: #ccc;">Swap Meets</div>
+          </div>
+        </div>
+        <!-- Event cards preview -->
+        <div style="display: flex; gap: 8px; padding: 0 4px;">
+          <div style="flex: 1; background: #1a1a1a; border-radius: 8px; overflow: hidden;">
+            <div style="height: 50px; background: linear-gradient(135deg, #2d1b69, #11998e);"></div>
+            <div style="padding: 8px;">
+              <div style="font-size: 11px; font-weight: 600; color: white;">Saturday Cruise-In</div>
+              <div style="font-size: 10px; color: #888;">Tomorrow &middot; 2.3 mi</div>
+            </div>
+          </div>
+          <div style="flex: 1; background: #1a1a1a; border-radius: 8px; overflow: hidden;">
+            <div style="height: 50px; background: linear-gradient(135deg, #c0392b, #e74c3c);"></div>
+            <div style="padding: 8px;">
+              <div style="font-size: 11px; font-weight: 600; color: white;">Mustang Meet</div>
+              <div style="font-size: 10px; color: #888;">Sat Mar 5 &middot; 8.1 mi</div>
+            </div>
+          </div>
+          <div style="flex: 1; background: #1a1a1a; border-radius: 8px; overflow: hidden;">
+            <div style="height: 50px; background: linear-gradient(135deg, #f39c12, #e67e22);"></div>
+            <div style="padding: 8px;">
+              <div style="font-size: 11px; font-weight: 600; color: white;">Cars & Coffee</div>
+              <div style="font-size: 10px; color: #888;">Sun Mar 6 &middot; 5.7 mi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Utility-First with Search</h3>
+      <p>Search bar and event type filters front and center. "What's happening near you?" is the immediate question answered. Event cards appear right away. Functional, fast, Google-Maps-meets-Eventbrite energy.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Instant utility — no scrolling needed</li><li>Works even with minimal content</li><li>Clear value proposition</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Less emotional impact</li><li>Can feel generic/utilitarian</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background: #0a0a0a; padding: 20px; min-height: 280px;">
+        <!-- Hybrid: visual strip + immediate utility -->
+        <div style="display: flex; gap: 12px; margin-bottom: 16px; overflow: hidden; border-radius: 8px;">
+          <div style="flex: 1; height: 80px; background: linear-gradient(135deg, #1a1a2e, #0f3460); border-radius: 6px; display: flex; align-items: flex-end; padding: 8px;">
+            <div style="font-size: 10px; color: #ccc;">Featured</div>
+          </div>
+          <div style="flex: 1; height: 80px; background: linear-gradient(135deg, #2d1b69, #11998e); border-radius: 6px; display: flex; align-items: flex-end; padding: 8px;">
+            <div style="font-size: 10px; color: #ccc;">Trending</div>
+          </div>
+          <div style="flex: 1; height: 80px; background: linear-gradient(135deg, #c0392b, #e74c3c); border-radius: 6px; display: flex; align-items: flex-end; padding: 8px;">
+            <div style="font-size: 10px; color: #ccc;">Near You</div>
+          </div>
+        </div>
+        <!-- Search + filters -->
+        <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <div style="color: #666;">&#128269;</div>
+          <div style="color: #555; font-size: 13px; flex: 1;">Search events, vehicles, people...</div>
+          <div style="color: #555; font-size: 13px; border-left: 1px solid #333; padding-left: 8px;">&#128205; Austin, TX</div>
+        </div>
+        <!-- Mixed content feed -->
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; gap: 10px; background: #1a1a1a; border-radius: 8px; padding: 10px; align-items: center;">
+            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #f39c12, #e67e22); border-radius: 6px; flex-shrink: 0;"></div>
+            <div>
+              <div style="font-size: 12px; font-weight: 600; color: white;">Hill Country Cruise-In</div>
+              <div style="font-size: 10px; color: #f59e0b;">EVENT &middot; Tomorrow 9am &middot; 127 going</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px; background: #1a1a1a; border-radius: 8px; padding: 10px; align-items: center;">
+            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #3498db, #2980b9); border-radius: 6px; flex-shrink: 0;"></div>
+            <div>
+              <div style="font-size: 12px; font-weight: 600; color: white;">'69 Camaro SS — Full Restore</div>
+              <div style="font-size: 10px; color: #3498db;">VEHICLE &middot; by @mike_builds &middot; 89 &#9829;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C: Hybrid — Visual Strip + Unified Search</h3>
+      <p>Compact visual banner (not full-screen hero) with featured/trending/nearby, then immediately into a unified search bar and mixed-content feed (events, vehicles, people). Best of both — visual personality without burying utility.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Visual hook without hiding utility</li><li>Unified search across all content types</li><li>Scales well as content grows</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Slightly busier than the other two</li><li>More to design/build upfront</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+</div>

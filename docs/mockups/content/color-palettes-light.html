@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Light Theme — Color Palettes</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #080810; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  h1 { text-align: center; font-size: 22px; font-weight: 800; padding: 28px 16px 4px; }
+  p.sub { text-align: center; font-size: 13px; color: #888; padding: 0 16px 24px; max-width: 650px; margin: 0 auto; }
+  .row { display: flex; gap: 20px; max-width: 950px; margin: 0 auto; padding: 0 24px 20px; }
+  .col { flex: 1; }
+  .label { text-align: center; font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+
+  .frame { border-radius: 14px; overflow: hidden; border: 1px solid #2a2a3a; box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+
+  .preview-row { display: flex; gap: 10px; align-items: center; padding: 12px 0; }
+  .preview-date { width: 36px; text-align: center; flex-shrink: 0; }
+  .preview-date-month { font-size: 9px; font-weight: 700; text-transform: uppercase; }
+  .preview-date-day { font-size: 17px; font-weight: 900; line-height: 1; }
+  .preview-title { font-size: 13px; font-weight: 600; }
+  .preview-sub { font-size: 10px; }
+  .preview-btn { padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: 600; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<h1>Dark vs Light — Side by Side</h1>
+<p class="sub">Same five palettes, each shown in dark (left) and light (right) mode. The accent color stays the same — backgrounds, text, and surfaces adapt.</p>
+
+<!-- ===== PALETTE A: Amber Gold ===== -->
+<div style="max-width: 950px; margin: 0 auto; padding: 0 24px 8px;">
+  <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">A: Amber Gold</div>
+  <div style="font-size: 11px; color: #888; margin-bottom: 12px;">Warm, premium, high contrast</div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="label">Dark</div>
+    <div class="frame" data-choice="a-dark" onclick="toggleSelect(this)">
+      <div style="background: #0a0a12; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(245,158,11,0.12); color: #f59e0b; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #555; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #555; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #f59e0b;">APR</div><div class="preview-date-day" style="color: white;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: white;">Saturday Cruise-In</div><div class="preview-sub" style="color: #777;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: rgba(245,158,11,0.1); color: #f59e0b;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #f59e0b;">APR</div><div class="preview-date-day" style="color: white;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: white;">Cars & Coffee</div><div class="preview-sub" style="color: #777;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: rgba(245,158,11,0.1); color: #f59e0b;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden;">
+          <div style="height: 60px; background: linear-gradient(145deg, #3a2020, #1a1218); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(10,10,18,0.9), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="label">Light</div>
+    <div class="frame" data-choice="a-light" onclick="toggleSelect(this)">
+      <div style="background: #fafaf8; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(217,119,6,0.1); color: #b45309; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #999; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #999; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #b45309;">APR</div><div class="preview-date-day" style="color: #111;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #111;">Saturday Cruise-In</div><div class="preview-sub" style="color: #888;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: #f59e0b; color: #000;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #b45309;">APR</div><div class="preview-date-day" style="color: #111;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #111;">Cars & Coffee</div><div class="preview-sub" style="color: #888;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: #f59e0b; color: #000;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);">
+          <div style="height: 60px; background: linear-gradient(145deg, #c88080, #a06060); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PALETTE B: Electric Blue ===== -->
+<div style="max-width: 950px; margin: 0 auto; padding: 12px 24px 8px;">
+  <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">B: Electric Blue</div>
+  <div style="font-size: 11px; color: #888; margin-bottom: 12px;">Cool, modern, tech-forward</div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="label">Dark</div>
+    <div class="frame" data-choice="b-dark" onclick="toggleSelect(this)">
+      <div style="background: #0a0a12; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(59,130,246,0.12); color: #3b82f6; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #555; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #555; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #3b82f6;">APR</div><div class="preview-date-day" style="color: white;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: white;">Saturday Cruise-In</div><div class="preview-sub" style="color: #777;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: rgba(59,130,246,0.1); color: #3b82f6;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #3b82f6;">APR</div><div class="preview-date-day" style="color: white;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: white;">Cars & Coffee</div><div class="preview-sub" style="color: #777;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: rgba(59,130,246,0.1); color: #3b82f6;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden;">
+          <div style="height: 60px; background: linear-gradient(145deg, #3a2020, #1a1218); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(10,10,18,0.9), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="label">Light</div>
+    <div class="frame" data-choice="b-light" onclick="toggleSelect(this)">
+      <div style="background: #f8f9fc; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(37,99,235,0.1); color: #2563eb; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #999; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #999; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #2563eb;">APR</div><div class="preview-date-day" style="color: #111;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #111;">Saturday Cruise-In</div><div class="preview-sub" style="color: #888;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: #3b82f6; color: #fff;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #2563eb;">APR</div><div class="preview-date-day" style="color: #111;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #111;">Cars & Coffee</div><div class="preview-sub" style="color: #888;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: #3b82f6; color: #fff;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);">
+          <div style="height: 60px; background: linear-gradient(145deg, #c88080, #a06060); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PALETTE C: Racing Red ===== -->
+<div style="max-width: 950px; margin: 0 auto; padding: 12px 24px 8px;">
+  <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">C: Racing Red</div>
+  <div style="font-size: 11px; color: #888; margin-bottom: 12px;">Bold, passionate, automotive</div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="label">Dark</div>
+    <div class="frame" data-choice="c-dark" onclick="toggleSelect(this)">
+      <div style="background: #0a0a12; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(239,68,68,0.12); color: #ef4444; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #555; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #555; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #ef4444;">APR</div><div class="preview-date-day" style="color: white;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: white;">Saturday Cruise-In</div><div class="preview-sub" style="color: #777;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: rgba(239,68,68,0.1); color: #ef4444;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #ef4444;">APR</div><div class="preview-date-day" style="color: white;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: white;">Cars & Coffee</div><div class="preview-sub" style="color: #777;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: rgba(239,68,68,0.1); color: #ef4444;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden;">
+          <div style="height: 60px; background: linear-gradient(145deg, #3a2020, #1a1218); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(10,10,18,0.9), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="label">Light</div>
+    <div class="frame" data-choice="c-light" onclick="toggleSelect(this)">
+      <div style="background: #faf8f8; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(220,38,38,0.08); color: #dc2626; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #999; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #999; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #dc2626;">APR</div><div class="preview-date-day" style="color: #111;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #111;">Saturday Cruise-In</div><div class="preview-sub" style="color: #888;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: #ef4444; color: #fff;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #dc2626;">APR</div><div class="preview-date-day" style="color: #111;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #111;">Cars & Coffee</div><div class="preview-sub" style="color: #888;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: #ef4444; color: #fff;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);">
+          <div style="height: 60px; background: linear-gradient(145deg, #c88080, #a06060); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PALETTE D: Midnight Teal ===== -->
+<div style="max-width: 950px; margin: 0 auto; padding: 12px 24px 8px;">
+  <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">D: Midnight Teal</div>
+  <div style="font-size: 11px; color: #888; margin-bottom: 12px;">Distinctive, calm confidence</div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="label">Dark</div>
+    <div class="frame" data-choice="d-dark" onclick="toggleSelect(this)">
+      <div style="background: #0a0a12; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(20,184,166,0.12); color: #14b8a6; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #555; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #555; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #14b8a6;">APR</div><div class="preview-date-day" style="color: white;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: white;">Saturday Cruise-In</div><div class="preview-sub" style="color: #777;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: rgba(20,184,166,0.1); color: #14b8a6;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #14b8a6;">APR</div><div class="preview-date-day" style="color: white;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: white;">Cars & Coffee</div><div class="preview-sub" style="color: #777;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: rgba(20,184,166,0.1); color: #14b8a6;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden;">
+          <div style="height: 60px; background: linear-gradient(145deg, #3a2020, #1a1218); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(10,10,18,0.9), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="label">Light</div>
+    <div class="frame" data-choice="d-light" onclick="toggleSelect(this)">
+      <div style="background: #f7faf9; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(13,148,136,0.08); color: #0d9488; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #999; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #999; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #0d9488;">APR</div><div class="preview-date-day" style="color: #111;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #111;">Saturday Cruise-In</div><div class="preview-sub" style="color: #888;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: #14b8a6; color: #fff;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #0d9488;">APR</div><div class="preview-date-day" style="color: #111;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #111;">Cars & Coffee</div><div class="preview-sub" style="color: #888;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: #14b8a6; color: #fff;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06);">
+          <div style="height: 60px; background: linear-gradient(145deg, #c88080, #a06060); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PALETTE E: Warm Amber + Charcoal ===== -->
+<div style="max-width: 950px; margin: 0 auto; padding: 12px 24px 8px;">
+  <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">E: Warm Amber + Charcoal <span style="background: rgba(245,158,11,0.15); color: #f59e0b; font-size: 10px; padding: 2px 8px; border-radius: 8px; margin-left: 6px; font-weight: 600;">RECOMMENDED</span></div>
+  <div style="font-size: 11px; color: #888; margin-bottom: 12px;">Warm neutrals in both modes. Photos feel natural, never clinical.</div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="label">Dark</div>
+    <div class="frame" data-choice="e-dark" onclick="toggleSelect(this)" style="border-color: #f59e0b44;">
+      <div style="background: #111113; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(245,158,11,0.12); color: #f59e0b; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #666; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #666; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #f59e0b;">APR</div><div class="preview-date-day" style="color: #f5f5f0;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #f5f5f0;">Saturday Cruise-In</div><div class="preview-sub" style="color: #888;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: rgba(245,158,11,0.1); color: #f59e0b;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #f59e0b;">APR</div><div class="preview-date-day" style="color: #f5f5f0;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #f5f5f0;">Cars & Coffee</div><div class="preview-sub" style="color: #888;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: rgba(245,158,11,0.1); color: #f59e0b;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden;">
+          <div style="height: 60px; background: linear-gradient(145deg, #3a2020, #1a1218); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(17,17,19,0.9), transparent);"><div style="font-size: 11px; font-weight: 600; color: #f5f5f0;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="label">Light</div>
+    <div class="frame" data-choice="e-light" onclick="toggleSelect(this)" style="border-color: #f59e0b44;">
+      <div style="background: #faf9f6; padding: 16px 20px;">
+        <div style="display: flex; gap: 4px; margin-bottom: 12px;">
+          <div style="background: rgba(180,83,9,0.08); color: #92400e; padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 600;">All</div>
+          <div style="color: #aaa; padding: 4px 12px; font-size: 10px;">Events</div>
+          <div style="color: #aaa; padding: 4px 12px; font-size: 10px;">Vehicles</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #92400e;">APR</div><div class="preview-date-day" style="color: #1a1a18;">5</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #1a1a18;">Saturday Cruise-In</div><div class="preview-sub" style="color: #999;">Tomorrow 6pm · Round Rock</div></div>
+          <div class="preview-btn" style="background: #f59e0b; color: #000;">RSVP</div>
+        </div>
+        <div class="preview-row" style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+          <div class="preview-date"><div class="preview-date-month" style="color: #92400e;">APR</div><div class="preview-date-day" style="color: #1a1a18;">6</div></div>
+          <div style="flex: 1;"><div class="preview-title" style="color: #1a1a18;">Cars & Coffee</div><div class="preview-sub" style="color: #999;">Sunday 8am · Austin</div></div>
+          <div class="preview-btn" style="background: #f59e0b; color: #000;">RSVP</div>
+        </div>
+        <div style="margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
+          <div style="height: 60px; background: linear-gradient(145deg, #c88080, #a06060); position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 10px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);"><div style="font-size: 11px; font-weight: 600; color: white;">'69 Camaro SS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="height: 40px;"></div>
+
+</body>
+</html>
