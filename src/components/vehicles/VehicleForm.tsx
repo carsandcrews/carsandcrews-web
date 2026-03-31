@@ -6,6 +6,7 @@ import { createBrowserClient } from '@/lib/supabase/client'
 import { useUpload } from '@/hooks/use-upload'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { NhtsaAutocomplete } from '@/components/vehicles/NhtsaAutocomplete'
 import { generateSlug } from '@/lib/utils'
 import { VEHICLE_STATUS_TAGS, VEHICLE_STATUS_LABELS, type VehicleStatusTag } from '@/lib/constants'
 
@@ -198,8 +199,14 @@ export function VehicleForm({ mode = 'add', initialData }: VehicleFormProps) {
 
       <div className="grid gap-4 sm:grid-cols-3">
         <Input label="Year" type="number" value={year} onChange={(e) => setYear(e.target.value)} error={errors.year} placeholder="1969" />
-        <Input label="Make" value={make} onChange={(e) => setMake(e.target.value)} error={errors.make} placeholder="Chevrolet" />
-        <Input label="Model" value={model} onChange={(e) => setModel(e.target.value)} error={errors.model} placeholder="Camaro" />
+        <div>
+          <NhtsaAutocomplete label="Make" value={make} onChange={setMake} year={year ? Number(year) : undefined} endpoint="makes" placeholder="Chevrolet" />
+          {errors.make ? <p className="mt-1 text-sm text-red-400">{errors.make}</p> : null}
+        </div>
+        <div>
+          <NhtsaAutocomplete label="Model" value={model} onChange={setModel} year={year ? Number(year) : undefined} make={make} endpoint="models" placeholder="Camaro" />
+          {errors.model ? <p className="mt-1 text-sm text-red-400">{errors.model}</p> : null}
+        </div>
       </div>
 
       <Input label="Body Style" value={bodyStyle} onChange={(e) => setBodyStyle(e.target.value)} placeholder="Coupe, Convertible, etc." />
