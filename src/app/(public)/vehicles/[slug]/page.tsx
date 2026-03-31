@@ -4,6 +4,7 @@ import { createServer } from '@/lib/supabase/server'
 import { VehicleDetailHeader } from '@/components/vehicles/VehicleDetailHeader'
 import { VehicleSpecsPanel } from '@/components/vehicles/VehicleSpecsPanel'
 import { ShareButton } from '@/components/events/ShareButton'
+import { PhotoGallery } from '@/components/photos/PhotoGallery'
 import type { VehicleStatusTag } from '@/lib/constants'
 
 interface PageProps {
@@ -79,20 +80,15 @@ export default async function VehicleDetailPage({ params }: PageProps) {
           ownerUsername={owner?.username || ''}
         />
 
-        {/* Gallery grid */}
+        {/* Photo gallery with lightbox */}
         {galleryPhotos.length > 0 ? (
-          <div className="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-3">
-            {galleryPhotos.map((photo: { id: string; url: string; caption: string | null }) => (
-              <div key={photo.id} className="relative aspect-square overflow-hidden rounded-xl bg-[#1a1a1d]">
-                <img
-                  src={photo.url}
-                  alt={photo.caption || `${vehicle.year} ${vehicle.make} ${vehicle.model}`}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 30px rgba(0,0,0,0.2)' }} />
-              </div>
-            ))}
+          <div className="mt-8">
+            <PhotoGallery
+              photos={galleryPhotos.map((p: { url: string; caption: string | null }) => ({
+                url: p.url,
+                caption: p.caption
+              }))}
+            />
           </div>
         ) : null}
 
