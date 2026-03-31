@@ -53,7 +53,7 @@ export default function AdminAuditLogPage() {
       <h1 className="text-2xl font-bold text-[#f5f5f0] mb-6">Audit Log</h1>
 
       {/* Filters */}
-      <div className="flex gap-4 mb-6">
+      <div className="flex flex-wrap gap-4 mb-6">
         <div>
           <label htmlFor="action-filter" className="block text-xs font-medium text-[#888] mb-1">Action Type</label>
           <select

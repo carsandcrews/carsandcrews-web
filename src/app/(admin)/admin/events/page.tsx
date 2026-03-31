@@ -126,7 +126,7 @@ export default function AdminEventsPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-4 mb-6">
+      <div className="flex flex-wrap gap-4 mb-6">
         <div>
           <label htmlFor="source-filter" className="block text-xs font-medium text-[#888] mb-1">Source</label>
           <select

@@ -29,12 +29,12 @@ export default async function AdminLayout({
   if (!profile || profile.role !== 'admin') redirect('/')
 
   return (
-    <div className="min-h-screen bg-[#111113] flex">
-      {/* Sidebar */}
-      <aside className="w-56 flex-shrink-0 border-r border-white/5 bg-[#0d0d0f]">
-        <div className="sticky top-0 px-4 py-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-amber-500 mb-6">Admin</h2>
-          <nav className="space-y-1">
+    <div className="min-h-screen bg-[#111113] md:flex">
+      {/* Sidebar — hidden on mobile, shown as top nav */}
+      <aside className="w-full flex-shrink-0 border-b border-white/5 bg-[#0d0d0f] md:w-56 md:border-b-0 md:border-r">
+        <div className="md:sticky md:top-0 px-4 py-4 md:py-6">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-amber-500 mb-3 md:mb-6">Admin</h2>
+          <nav className="flex flex-wrap gap-1 md:flex-col md:space-y-1 md:gap-0">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.href}
@@ -45,7 +45,7 @@ export default async function AdminLayout({
               </a>
             ))}
           </nav>
-          <div className="mt-8 border-t border-white/5 pt-4">
+          <div className="mt-4 border-t border-white/5 pt-3 md:mt-8 md:pt-4">
             <a
               href="/dashboard"
               className="block text-xs text-[#555] hover:text-[#888] transition-colors"

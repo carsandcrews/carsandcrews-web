@@ -68,7 +68,7 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-[#111113]">
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-7">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
           <h1 className="text-2xl font-bold text-[#f5f5f0]">Dashboard</h1>
           <div className="flex gap-3">
             <a

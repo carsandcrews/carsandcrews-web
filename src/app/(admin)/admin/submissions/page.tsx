@@ -143,19 +143,19 @@ export default function AdminSubmissionsPage() {
                 </a>
               ) : null}
 
-              <div className="mt-3 border-t border-white/5 pt-3 flex items-center justify-between">
+              <div className="mt-3 border-t border-white/5 pt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-xs text-[#666]">
                   Submitted by <span className="text-[#f5f5f0]/70">{sub.submitter?.display_name || 'Unknown'}</span>
                 </p>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   {rejectingId === sub.id ? (
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <input
                         type="text"
                         value={rejectReason}
                         onChange={(e) => setRejectReason(e.target.value)}
                         placeholder="Reason (optional)"
-                        className="rounded-lg bg-white/5 border border-white/10 px-3 py-1.5 text-sm text-white w-48"
+                        className="rounded-lg bg-white/5 border border-white/10 px-3 py-1.5 text-sm text-white w-full sm:w-48"
                       />
                       <Button variant="ghost" onClick={() => handleReject(sub.id)} className="text-red-400 text-xs">
                         Confirm Reject
