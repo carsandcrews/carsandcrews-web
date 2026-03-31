@@ -103,3 +103,47 @@ export const US_STATES = [
   { code: 'WY', name: 'Wyoming' },
   { code: 'DC', name: 'District of Columbia' }
 ] as const
+
+export const RESERVED_USERNAMES = [
+  'events',
+  'vehicles',
+  'admin',
+  'settings',
+  'dashboard',
+  'sign-in',
+  'sign-up',
+  'map',
+  'api',
+  'about',
+  'help',
+  'privacy',
+  'terms',
+  'search',
+  'explore',
+  'garage',
+  'new',
+  'edit',
+  'delete',
+  'null',
+  'undefined'
+] as const
+
+export const ADMIN_ACTION_TYPES = [
+  'create',
+  'update',
+  'delete',
+  'approve',
+  'reject'
+] as const
+
+export type AdminActionType = typeof ADMIN_ACTION_TYPES[number]
+
+export const ADMIN_TARGET_TYPES = [
+  'event',
+  'vehicle',
+  'profile',
+  'submission',
+  'claim'
+] as const
+
+export type AdminTargetType = typeof ADMIN_TARGET_TYPES[number]
