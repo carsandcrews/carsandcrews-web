@@ -12,6 +12,7 @@ interface Vehicle {
   model: string
   slug: string
   status_tag: string
+  photo_url: string | null
 }
 
 interface RsvpEvent {
@@ -47,12 +48,16 @@ export default function DashboardPage() {
       if (!user) return
 
       const [vehiclesRes, rsvpsRes, submissionsRes] = await Promise.all([
-        supabase.from('vehicles').select('id, year, make, model, slug, status_tag').eq('owner_id', user.id).order('created_at', { ascending: false }),
+        supabase.from('vehicles').select('id, year, make, model, slug, status_tag, vehicle_photos(url, position)').eq('owner_id', user.id).order('created_at', { ascending: false }),
         supabase.from('rsvps').select('id, status, event:events!inner(id, name, slug, date, city, state, event_type)').eq('user_id', user.id).order('created_at', { ascending: false }),
         supabase.from('event_submissions').select('id, name, status, created_at').eq('submitted_by', user.id).order('created_at', { ascending: false })
       ])
 
-      setVehicles((vehiclesRes.data || []) as unknown as Vehicle[])
+      setVehicles((vehiclesRes.data || []).map((v: Record<string, unknown>) => {
+        const photos = (v.vehicle_photos as Array<{ url: string; position: number }>) || []
+        const firstPhoto = photos.sort((a, b) => a.position - b.position)[0]
+        return { ...v, photo_url: firstPhoto?.url || null }
+      }) as unknown as Vehicle[])
       setRsvps((rsvpsRes.data || []) as unknown as RsvpEvent[])
       setSubmissions((submissionsRes.data || []) as unknown as Submission[])
     }
@@ -95,9 +100,22 @@ export default function DashboardPage() {
                 <a
                   key={v.id}
                   href={`/garage/${v.id}/edit`}
-                  className="flex items-center justify-between py-3 border-b border-white/[0.04] transition-colors duration-150 hover:bg-white/[0.02] -mx-2 px-2 rounded-lg"
+                  className="flex items-center gap-3 py-3 border-b border-white/[0.04] transition-colors duration-150 hover:bg-white/[0.02] -mx-2 px-2 rounded-lg"
                 >
-                  <div>
+                  {v.photo_url ? (
+                    <img
+                      src={v.photo_url}
+                      alt={`${v.year} ${v.make} ${v.model}`}
+                      className="h-12 w-12 rounded-lg object-cover flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="h-12 w-12 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 text-white/30">
+                        <path d="M1 8.25a1.25 1.25 0 112.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5zM7.25 3v1.325C8.692 5.186 9.998 6.312 10.745 7.5H15.5A1.5 1.5 0 0117 9v1a1.5 1.5 0 01-1.5 1.5h-.628a5.003 5.003 0 01-2.872 3.5V17.5a1.5 1.5 0 01-1.5 1.5h-2A1.5 1.5 0 017 17.5V15H5.5A1.5 1.5 0 014 13.5V8.25A1.25 1.25 0 015.25 7h2V3z" />
+                      </svg>
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
                     <div className="text-[15px] font-semibold text-[#f5f5f0]">
                       {v.year} {v.make} {v.model}
                     </div>
