@@ -28,8 +28,9 @@ export function NavBar() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 lg:px-7" aria-label="Main navigation">
         {/* Left: brand + nav links */}
         <div className="flex items-center gap-7">
-          <Link href="/" className="text-lg font-extrabold tracking-tight text-text-primary" aria-label="Cars & Crews home">
-            Cars & Crews
+          <Link href="/" className="flex items-center gap-2" aria-label="Cars & Crews home">
+            <img src="/logo.svg" alt="Cars & Crews" className="h-8 w-8" />
+            <span className="text-lg font-extrabold tracking-tight text-text-primary">Cars & Crews</span>
           </Link>
           <div className="hidden items-center gap-5 md:flex">
             {NAV_LINKS.map((link) => (
