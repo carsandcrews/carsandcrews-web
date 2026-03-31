@@ -18,7 +18,7 @@ export function FeedEventRow({ name, date, city, state, eventType, slug, stateCo
   return (
     <Link
       href={`/events/${stateCode.toLowerCase()}/${slug}`}
-      className="flex items-center gap-4 border-b border-border py-4 transition-colors duration-150 hover:bg-surface/50"
+      className="flex items-center gap-4 border-b border-white/[0.04] py-4 transition-colors duration-150 hover:bg-surface/50"
     >
       <div className="w-12 flex-shrink-0 text-center">
         <div className="text-[11px] font-bold tracking-wide text-accent">{month}</div>

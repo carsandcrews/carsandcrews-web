@@ -15,7 +15,7 @@ export function FeedMembers({ members }: FeedMembersProps) {
   if (members.length === 0) return null
 
   return (
-    <div className="border-b border-border py-5">
+    <div className="border-b border-white/[0.04] py-5">
       <h3 className="mb-3.5 text-[11px] uppercase tracking-[1.5px] text-text-faint">New Members</h3>
       <div className="flex gap-5 overflow-x-auto">
         {members.map((m) => (

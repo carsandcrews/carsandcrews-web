@@ -56,7 +56,7 @@ export function LandingFeed({ events, vehicles, members }: LandingFeedProps) {
           <MixedFeed events={events} vehicles={vehicles} members={members} />
         ) : (
           <>
-            {showEvents && events.map((e) => (
+            {showEvents && (events.length > 0 ? events : PLACEHOLDER_EVENTS).map((e) => (
               <FeedEventRow
                 key={e.slug}
                 name={e.name}
@@ -68,7 +68,7 @@ export function LandingFeed({ events, vehicles, members }: LandingFeedProps) {
                 stateCode={e.state_code}
               />
             ))}
-            {showVehicles && vehicles.map((v) => (
+            {showVehicles && (vehicles.length > 0 ? vehicles : PLACEHOLDER_VEHICLES).map((v) => (
               <FeedVehicleCard
                 key={v.slug}
                 year={v.year}
@@ -82,18 +82,13 @@ export function LandingFeed({ events, vehicles, members }: LandingFeedProps) {
             ))}
             {showPeople && (
               <FeedMembers
-                members={members.map((m) => ({
+                members={(members.length > 0 ? members : PLACEHOLDER_MEMBERS).map((m) => ({
                   username: m.username,
                   displayName: m.display_name,
                   avatarUrl: m.avatar_url,
                   tagline: m.tagline,
                 }))}
               />
-            )}
-            {((showEvents && events.length === 0) ||
-              (showVehicles && vehicles.length === 0) ||
-              (showPeople && members.length === 0)) && (
-              <p className="py-12 text-center text-sm text-text-faint">Nothing here yet. Check back soon.</p>
             )}
           </>
         )}
@@ -102,10 +97,34 @@ export function LandingFeed({ events, vehicles, members }: LandingFeedProps) {
   )
 }
 
+const PLACEHOLDER_EVENTS: FeedEvent[] = [
+  { name: 'Saturday Cruise-In at Sonic', date: '2026-04-05', city: 'Round Rock', state: 'TX', event_type: 'cruise_in', slug: 'saturday-cruise-in-at-sonic', state_code: 'tx' },
+  { name: 'Cars & Coffee — The Domain', date: '2026-04-06', city: 'Austin', state: 'TX', event_type: 'cars_and_coffee', slug: 'cars-and-coffee-the-domain', state_code: 'tx' },
+  { name: 'Lone Star Nationals', date: '2026-04-12', city: 'Fort Worth', state: 'TX', event_type: 'car_show', slug: 'lone-star-nationals', state_code: 'tx' },
+  { name: 'Hill Country Cruise', date: '2026-04-19', city: 'Dripping Springs', state: 'TX', event_type: 'cruise', slug: 'hill-country-cruise', state_code: 'tx' },
+]
+
+const PLACEHOLDER_VEHICLES: FeedVehicle[] = [
+  { year: 1957, make: 'Chevrolet', model: 'Bel Air', slug: '57-bel-air-survivor', photo_url: null, owner_name: 'classic_joe' },
+  { year: 1992, make: 'Acura', model: 'NSX', slug: '92-nsx-jdm-spec', photo_url: null, owner_name: 'jdm_life' },
+  { year: 1970, make: 'Chevrolet', model: 'Chevelle SS 454', slug: '70-chevelle-ss-454', photo_url: null, owner_name: 'big_block_tony' },
+]
+
+const PLACEHOLDER_MEMBERS: FeedMember[] = [
+  { username: 'lone_star_garage', display_name: 'Lone Star Garage', avatar_url: null, tagline: 'Muscle cars · San Antonio' },
+  { username: 'jdm_life', display_name: 'JDM Life', avatar_url: null, tagline: 'JDM builds · Austin' },
+  { username: 'patina_queen', display_name: 'Patina Queen', avatar_url: null, tagline: 'Rat rods · Dallas' },
+]
+
 function MixedFeed({ events, vehicles, members }: LandingFeedProps) {
+  // Use placeholder data when DB is empty so the page looks complete
+  const feedEvents = events.length > 0 ? events : PLACEHOLDER_EVENTS
+  const feedVehicles = vehicles.length > 0 ? vehicles : PLACEHOLDER_VEHICLES
+  const feedMembers = members.length > 0 ? members : PLACEHOLDER_MEMBERS
+
   // Build a varied rhythm: 2 events, 1 vehicle wide, 1 event, members, 2 vehicles side-by-side, 1 event
-  const eventSlots = [...events]
-  const vehicleSlots = [...vehicles]
+  const eventSlots = [...feedEvents]
+  const vehicleSlots = [...feedVehicles]
 
   const sections: React.ReactNode[] = []
 
@@ -161,19 +180,17 @@ function MixedFeed({ events, vehicles, members }: LandingFeedProps) {
   }
 
   // Members section
-  if (members.length > 0) {
-    sections.push(
-      <FeedMembers
-        key="members"
-        members={members.map((m) => ({
-          username: m.username,
-          displayName: m.display_name,
-          avatarUrl: m.avatar_url,
-          tagline: m.tagline,
-        }))}
-      />
-    )
-  }
+  sections.push(
+    <FeedMembers
+      key="members"
+      members={feedMembers.map((m) => ({
+        username: m.username,
+        displayName: m.display_name,
+        avatarUrl: m.avatar_url,
+        tagline: m.tagline,
+      }))}
+    />
+  )
 
   // 2 vehicles side-by-side
   if (vehicleSlots.length >= 2) {
@@ -221,10 +238,6 @@ function MixedFeed({ events, vehicles, members }: LandingFeedProps) {
         aspect="16/10"
       />
     )
-  }
-
-  if (sections.length === 0) {
-    return <p className="py-12 text-center text-sm text-text-faint">Nothing here yet. Check back soon.</p>
   }
 
   return <>{sections}</>

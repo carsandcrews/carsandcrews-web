@@ -16,7 +16,7 @@ export function SearchBarLanding() {
 
   return (
     <form onSubmit={handleSubmit} className="px-4 pb-5 sm:px-6 lg:px-7">
-      <div className="flex items-center gap-2.5 rounded-3xl border border-border bg-surface px-5 py-3">
+      <div className="flex items-center gap-2.5 rounded-3xl border border-white/[0.06] bg-[#12121e] px-5 py-3">
         <svg className="h-4 w-4 flex-shrink-0 text-text-faint" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
         </svg>
