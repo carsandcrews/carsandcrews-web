@@ -16,9 +16,8 @@
   color-scheme: dark;
 }
 
-/* Light mode */
-@media (prefers-color-scheme: light) {
-  :root {
+/* Light mode — only when explicitly opted in via data attribute */
+html[data-theme="light"] {
     --accent: #f59e0b;
     --accent-hover: #d97706;
     --accent-text: #92400e;
@@ -31,7 +30,6 @@
     --nav-bg: rgba(250, 249, 246, 0.85);
 
     color-scheme: light;
-  }
 }
 
 @theme inline {
