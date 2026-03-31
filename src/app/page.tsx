@@ -1,65 +1,92 @@
-import Image from "next/image";
+import { createServer } from '@/lib/supabase/server'
+import { FeaturedStrip } from '@/components/landing/FeaturedStrip'
+import { SearchBarLanding } from '@/components/landing/SearchBarLanding'
+import { LandingFeed } from '@/components/landing/LandingFeed'
 
-export default function Home() {
+export default async function HomePage() {
+  const supabase = await createServer()
+
+  // Fetch upcoming events (next 30 days, ordered by date)
+  const today = new Date().toISOString().split('T')[0]
+  const thirtyDays = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0]
+
+  const [eventsRes, vehiclesRes, membersRes] = await Promise.all([
+    supabase
+      .from('events')
+      .select('name, date, city, state, event_type, slug, state_code, banner_url, status')
+      .eq('status', 'published')
+      .gte('date', today)
+      .lte('date', thirtyDays)
+      .order('date', { ascending: true })
+      .limit(8),
+    supabase
+      .from('vehicles')
+      .select('year, make, model, slug, photo_url, profiles(username)')
+      .order('created_at', { ascending: false })
+      .limit(6),
+    supabase
+      .from('profiles')
+      .select('username, display_name, avatar_url, tagline')
+      .order('created_at', { ascending: false })
+      .limit(4),
+  ])
+
+  const events = (eventsRes.data ?? []).map((e) => ({
+    name: e.name,
+    date: e.date,
+    city: e.city,
+    state: e.state,
+    event_type: e.event_type,
+    slug: e.slug,
+    state_code: e.state_code,
+  }))
+
+  const vehicles = (vehiclesRes.data ?? []).map((v: Record<string, unknown>) => ({
+    year: v.year as number,
+    make: v.make as string,
+    model: v.model as string,
+    slug: v.slug as string,
+    photo_url: (v.photo_url as string) || null,
+    owner_name: ((v.profiles as Record<string, string>)?.username as string) || 'unknown',
+  }))
+
+  const members = (membersRes.data ?? []).map((m) => ({
+    username: m.username,
+    display_name: m.display_name,
+    avatar_url: m.avatar_url,
+    tagline: m.tagline,
+  }))
+
+  // Featured: first event with a banner, or first event
+  const featuredEvent = events.length > 0
+    ? {
+        name: events[0].name,
+        date: events[0].date,
+        city: events[0].city,
+        state: events[0].state,
+        slug: events[0].slug,
+        stateCode: events[0].state_code,
+        bannerUrl: (eventsRes.data?.[0] as Record<string, unknown>)?.banner_url as string | null,
+      }
+    : null
+
+  const featuredVehicle = vehicles.length > 0
+    ? {
+        year: vehicles[0].year,
+        make: vehicles[0].make,
+        model: vehicles[0].model,
+        slug: vehicles[0].slug,
+        photoUrl: vehicles[0].photo_url,
+        ownerName: vehicles[0].owner_name,
+        statusTag: 'Restored',
+      }
+    : null
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="mx-auto w-full max-w-3xl">
+      <FeaturedStrip event={featuredEvent} vehicle={featuredVehicle} />
+      <SearchBarLanding />
+      <LandingFeed events={events} vehicles={vehicles} members={members} />
     </div>
-  );
+  )
 }
