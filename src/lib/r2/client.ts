@@ -23,7 +23,6 @@ export async function createSignedUploadUrl(
     Bucket: process.env.R2_BUCKET_NAME!,
     Key: key,
     ContentType: contentType,
-    ContentLength: maxSizeBytes
   })
 
   return getSignedUrl(r2, command, { expiresIn: 300 })
