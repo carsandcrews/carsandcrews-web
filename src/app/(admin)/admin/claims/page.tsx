@@ -30,7 +30,7 @@ export default function AdminClaimsPage() {
       .select('*, event:events!event_id(id, name, slug, date), claimant:profiles!user_id(display_name, username)')
       .eq('status', 'pending')
       .order('created_at', { ascending: false })
-    setClaims((data || []) as Claim[])
+    setClaims((data || []) as unknown as Claim[])
   }
 
   async function handleApprove(claim: Claim) {

@@ -37,7 +37,7 @@ export default function AdminSubmissionsPage() {
       .select('*, submitter:profiles!submitted_by(display_name, username)')
       .eq('status', 'pending')
       .order('created_at', { ascending: true })
-    setSubmissions((data || []) as Submission[])
+    setSubmissions((data || []) as unknown as Submission[])
   }
 
   async function handleApprove(submission: Submission) {

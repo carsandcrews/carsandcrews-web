@@ -75,7 +75,7 @@ export default async function EventsExplorePage({
         <EventsExploreClient
           initialEvents={eventItems}
           initialQuery={params.q || ''}
-          initialTypes={(params.type?.split(',') as EventType[]) || []}
+          initialTypes={(params.type?.split(',') as unknown as EventType[]) || []}
           currentPage={page}
           totalPages={totalPages}
         />

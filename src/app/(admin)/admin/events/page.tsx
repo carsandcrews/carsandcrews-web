@@ -36,7 +36,7 @@ export default function AdminEventsPage() {
     if (filterStatus) query = query.eq('status', filterStatus)
 
     const { data } = await query
-    setEvents((data || []) as Event[])
+    setEvents((data || []) as unknown as Event[])
   }, [supabase, filterSource, filterStatus])
 
   useEffect(() => {

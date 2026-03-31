@@ -33,7 +33,7 @@ export default function AdminAuditLogPage() {
     if (dateTo) query = query.lte('created_at', dateTo + 'T23:59:59Z')
 
     const { data } = await query.order('created_at', { ascending: false })
-    setActions((data || []) as AuditAction[])
+    setActions((data || []) as unknown as AuditAction[])
   }, [supabase, filterAction, filterTarget, dateFrom, dateTo])
 
   useEffect(() => {

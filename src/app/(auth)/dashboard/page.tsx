@@ -52,9 +52,9 @@ export default function DashboardPage() {
         supabase.from('event_submissions').select('id, name, status, created_at').eq('submitted_by', user.id).order('created_at', { ascending: false })
       ])
 
-      setVehicles((vehiclesRes.data || []) as Vehicle[])
-      setRsvps((rsvpsRes.data || []) as RsvpEvent[])
-      setSubmissions((submissionsRes.data || []) as Submission[])
+      setVehicles((vehiclesRes.data || []) as unknown as Vehicle[])
+      setRsvps((rsvpsRes.data || []) as unknown as RsvpEvent[])
+      setSubmissions((submissionsRes.data || []) as unknown as Submission[])
     }
     load()
   }, [supabase])

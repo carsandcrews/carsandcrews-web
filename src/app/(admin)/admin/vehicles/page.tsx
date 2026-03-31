@@ -29,7 +29,7 @@ export default function AdminVehiclesPage() {
       .from('vehicles')
       .select('id, year, make, model, slug, status_tag, visibility, created_at, owner:profiles!owner_id(display_name, username)')
       .order('created_at', { ascending: false })
-    setVehicles((data || []) as Vehicle[])
+    setVehicles((data || []) as unknown as Vehicle[])
   }
 
   async function handleRemove(vehicle: Vehicle) {

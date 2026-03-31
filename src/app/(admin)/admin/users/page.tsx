@@ -26,7 +26,7 @@ export default function AdminUsersPage() {
       .from('profiles')
       .select('id, username, display_name, role, created_at, city, state')
       .order('created_at', { ascending: false })
-    setUsers((data || []) as User[])
+    setUsers((data || []) as unknown as User[])
   }
 
   async function toggleAdmin(user: User) {
