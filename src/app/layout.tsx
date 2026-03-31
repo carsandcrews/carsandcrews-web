@@ -41,7 +41,8 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="dark"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      style={{ colorScheme: 'dark' }}
     >
       <body className="min-h-full flex flex-col bg-bg text-text-primary">
         <NavBar />
