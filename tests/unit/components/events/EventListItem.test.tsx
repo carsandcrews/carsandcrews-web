@@ -39,4 +39,14 @@ describe('EventListItem', () => {
     const link = screen.getByRole('link')
     expect(link).toHaveAttribute('href', '/events/tx/saturday-cruise-in-at-sonic')
   })
+
+  it('shows RSVP count when provided', () => {
+    render(<EventListItem {...baseProps} rsvpCount={42} />)
+    expect(screen.getByText(/42 going/)).toBeInTheDocument()
+  })
+
+  it('does not show RSVP count when zero', () => {
+    render(<EventListItem {...baseProps} rsvpCount={0} />)
+    expect(screen.queryByText(/going/)).not.toBeInTheDocument()
+  })
 })

@@ -9,6 +9,7 @@ interface EventListItemProps {
   eventType: EventType
   slug: string
   stateCode: string
+  rsvpCount?: number
 }
 
 export function EventListItem({
@@ -18,7 +19,8 @@ export function EventListItem({
   state,
   eventType,
   slug,
-  stateCode
+  stateCode,
+  rsvpCount
 }: EventListItemProps) {
   const d = new Date(date + 'T00:00:00')
   const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()
@@ -37,6 +39,7 @@ export function EventListItem({
         <div className="text-[15px] font-semibold text-[#f5f5f0] truncate">{name}</div>
         <div className="text-xs text-[#666]">
           {city}, {state} · {formatEventType(eventType)}
+          {rsvpCount && rsvpCount > 0 ? ` · ${rsvpCount} going` : ''}
         </div>
       </div>
     </a>

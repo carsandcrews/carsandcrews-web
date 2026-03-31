@@ -4,7 +4,8 @@ import { createServer } from '@/lib/supabase/server'
 import { EventDetailHeader } from '@/components/events/EventDetailHeader'
 import { EventMeta } from '@/components/events/EventMeta'
 import { ShareButton } from '@/components/events/ShareButton'
-import { Button } from '@/components/ui/button'
+import { EventRsvpSection } from '@/components/events/EventRsvpSection'
+import { VehiclesAttending } from '@/components/events/VehiclesAttending'
 import type { EventType } from '@/lib/constants'
 
 interface PageProps {
@@ -74,6 +75,49 @@ export default async function EventDetailPage({ params }: PageProps) {
   const rsvpCount = event.rsvps?.[0]?.count ?? 0
   const claimStatus = !event.claimed ? await getUserClaimStatus(event.id) : null
 
+  // Get user RSVP status
+  const supabase = await createServer()
+  const { data: { user } } = await supabase.auth.getUser()
+  let userRsvpStatus: 'going' | 'interested' | null = null
+  let userRsvpId: string | null = null
+  let userVehicleId: string | null = null
+
+  if (user) {
+    const { data: rsvp } = await supabase
+      .from('rsvps')
+      .select('id, status, rsvp_vehicles(vehicle_id)')
+      .eq('event_id', event.id)
+      .eq('user_id', user.id)
+      .single()
+    if (rsvp) {
+      userRsvpStatus = rsvp.status as 'going' | 'interested'
+      userRsvpId = rsvp.id
+      const rsvpVehicles = rsvp.rsvp_vehicles as Array<{ vehicle_id: string }> | undefined
+      userVehicleId = rsvpVehicles?.[0]?.vehicle_id || null
+    }
+  }
+
+  // Get vehicles attending
+  const { data: attendingData } = await supabase
+    .from('rsvp_vehicles')
+    .select('vehicle:vehicles(id, year, make, model, vehicle_photos(thumbnail_url)), rsvp:rsvps!inner(event_id)')
+    .eq('rsvp.event_id', event.id)
+
+  const vehiclesAttending = (attendingData || [])
+    .map((rv: Record<string, unknown>) => {
+      const v = rv.vehicle as Record<string, unknown> | null
+      if (!v) return null
+      const photos = v.vehicle_photos as Array<{ thumbnail_url: string | null }> | undefined
+      return {
+        id: v.id as string,
+        year: v.year as number,
+        make: v.make as string,
+        model: v.model as string,
+        thumbnail_url: photos?.[0]?.thumbnail_url || null
+      }
+    })
+    .filter(Boolean) as Array<{ id: string; year: number; make: string; model: string; thumbnail_url: string | null }>
+
   return (
     <main className="min-h-screen bg-[#111113]">
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-7">
@@ -118,10 +162,17 @@ export default async function EventDetailPage({ params }: PageProps) {
                 </p>
               </div>
             ) : null}
+
+            <VehiclesAttending vehicles={vehiclesAttending} />
           </div>
 
           <div className="flex flex-col gap-3 sm:w-48">
-            <Button>RSVP</Button>
+            <EventRsvpSection
+              eventId={event.id}
+              initialStatus={userRsvpStatus}
+              initialRsvpId={userRsvpId}
+              initialVehicleId={userVehicleId}
+            />
             {event.website ? (
               <a
                 href={event.website}
