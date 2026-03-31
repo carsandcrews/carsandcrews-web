@@ -52,7 +52,8 @@ export default async function HomePage() {
   const [vehiclesRes, membersRes] = await Promise.all([
     supabase
       .from('vehicles')
-      .select('year, make, model, slug, photo_url, profiles(username)')
+      .select('year, make, model, slug, vehicle_photos(url, position), profiles(username)')
+      .eq('visibility', 'public')
       .order('created_at', { ascending: false })
       .limit(6),
     supabase
@@ -62,14 +63,18 @@ export default async function HomePage() {
       .limit(4),
   ])
 
-  const vehicles = (vehiclesRes.data ?? []).map((v: Record<string, unknown>) => ({
-    year: v.year as number,
-    make: v.make as string,
-    model: v.model as string,
-    slug: v.slug as string,
-    photo_url: (v.photo_url as string) || null,
-    owner_name: ((v.profiles as Record<string, string>)?.username as string) || 'unknown',
-  }))
+  const vehicles = (vehiclesRes.data ?? []).map((v: Record<string, unknown>) => {
+    const photos = (v.vehicle_photos as Array<{url: string, position: number}>) || []
+    const firstPhoto = photos.sort((a, b) => a.position - b.position)[0]
+    return {
+      year: v.year as number,
+      make: v.make as string,
+      model: v.model as string,
+      slug: v.slug as string,
+      photo_url: firstPhoto?.url || null,
+      owner_name: ((v.profiles as Record<string, string>)?.username as string) || 'unknown',
+    }
+  })
 
   const members = (membersRes.data ?? []).map((m) => ({
     username: m.username,
