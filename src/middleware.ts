@@ -1,7 +1,17 @@
-import { type NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Rewrite /@username paths to /username (strip the @)
+  if (pathname.startsWith('/@') || pathname.startsWith('/%40')) {
+    const cleanPath = pathname.replace(/^\/@/, '/').replace(/^\/%40/, '/')
+    const url = request.nextUrl.clone()
+    url.pathname = cleanPath
+    return NextResponse.rewrite(url)
+  }
+
   return await updateSession(request)
 }
 

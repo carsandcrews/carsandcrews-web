@@ -48,12 +48,20 @@ export function NavBar() {
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
           {user ? (
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-black transition-colors duration-150 hover:bg-accent-hover"
-            >
-              Dashboard
-            </Link>
+            <>
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-black transition-colors duration-150 hover:bg-accent-hover"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/settings"
+                className="text-[13px] font-medium text-text-muted transition-colors duration-150 hover:text-text-primary"
+              >
+                Settings
+              </Link>
+            </>
           ) : (
             <>
               <Link
@@ -106,13 +114,22 @@ export function NavBar() {
             ))}
             <div className="mt-2 border-t border-border pt-3">
               {user ? (
-                <Link
-                  href="/dashboard"
-                  className="block rounded-full bg-accent px-4 py-2 text-center text-sm font-semibold text-black transition-colors duration-150 hover:bg-accent-hover"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Dashboard
-                </Link>
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href="/dashboard"
+                    className="block rounded-full bg-accent px-4 py-2 text-center text-sm font-semibold text-black transition-colors duration-150 hover:bg-accent-hover"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    href="/settings"
+                    className="block rounded-lg px-3 py-2 text-center text-sm font-medium text-text-muted transition-colors duration-150 hover:bg-surface hover:text-text-primary"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Settings
+                  </Link>
+                </div>
               ) : (
                 <div className="flex flex-col gap-2">
                   <Link
