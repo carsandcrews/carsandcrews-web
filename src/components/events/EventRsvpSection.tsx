@@ -39,18 +39,22 @@ export function EventRsvpSection({
 
       const { data } = await supabase
         .from('vehicles')
-        .select('id, year, make, model, vehicle_photos(thumbnail_url)')
+        .select('id, year, make, model, vehicle_photos(url, position)')
         .eq('owner_id', user.id)
         .order('year', { ascending: false })
 
       if (data) {
-        setVehicles(data.map((v: Record<string, unknown>) => ({
-          id: v.id as string,
-          year: v.year as number,
-          make: v.make as string,
-          model: v.model as string,
-          thumbnail_url: (v.vehicle_photos as Array<{ thumbnail_url: string | null }>)?.[0]?.thumbnail_url || null
-        })))
+        setVehicles(data.map((v: Record<string, unknown>) => {
+          const photos = (v.vehicle_photos as Array<{ url: string, position: number }>) || []
+          const firstPhoto = photos.sort((a, b) => a.position - b.position)[0]
+          return {
+            id: v.id as string,
+            year: v.year as number,
+            make: v.make as string,
+            model: v.model as string,
+            thumbnail_url: firstPhoto?.url || null
+          }
+        }))
       }
     }
     loadVehicles()
