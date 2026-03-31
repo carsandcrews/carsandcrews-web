@@ -1,0 +1,132 @@
+'use client'
+
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useState, useCallback } from 'react'
+import { EventListItem } from '@/components/events/EventListItem'
+import { EventFilters } from '@/components/events/EventFilters'
+import { SearchBar } from '@/components/events/SearchBar'
+import { useLocation } from '@/hooks/use-location'
+import type { EventType } from '@/lib/constants'
+
+interface EventItem {
+  id: string
+  name: string
+  slug: string
+  date: string
+  city: string
+  state: string
+  eventType: EventType
+  stateCode: string
+}
+
+interface EventsExploreClientProps {
+  initialEvents: EventItem[]
+  initialQuery: string
+  initialTypes: EventType[]
+  currentPage: number
+  totalPages: number
+}
+
+export function EventsExploreClient({
+  initialEvents,
+  initialQuery,
+  initialTypes,
+  currentPage,
+  totalPages
+}: EventsExploreClientProps) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const { location } = useLocation()
+
+  const [query, setQuery] = useState(initialQuery)
+  const [selectedTypes, setSelectedTypes] = useState<EventType[]>(initialTypes)
+
+  const buildUrl = useCallback((overrides: Record<string, string | undefined>) => {
+    const params = new URLSearchParams(searchParams.toString())
+    Object.entries(overrides).forEach(([key, value]) => {
+      if (value) params.set(key, value)
+      else params.delete(key)
+    })
+    params.delete('page')
+    return `/events?${params.toString()}`
+  }, [searchParams])
+
+  function handleSearch(value: string) {
+    setQuery(value)
+  }
+
+  function handleSearchSubmit() {
+    router.push(buildUrl({ q: query || undefined }))
+  }
+
+  function handleTypeToggle(type: EventType) {
+    const next = selectedTypes.includes(type)
+      ? selectedTypes.filter((t) => t !== type)
+      : [...selectedTypes, type]
+    setSelectedTypes(next)
+    router.push(buildUrl({ type: next.length > 0 ? next.join(',') : undefined }))
+  }
+
+  const locationStr = location ? `${location.city}, ${location.state}` : null
+
+  return (
+    <div className="space-y-6">
+      <div onKeyDown={(e) => { if (e.key === 'Enter') handleSearchSubmit() }}>
+        <SearchBar value={query} onChange={handleSearch} location={locationStr} />
+      </div>
+
+      <div className="flex items-center justify-between gap-4">
+        <EventFilters selectedTypes={selectedTypes} onTypeToggle={handleTypeToggle} />
+        <a
+          href="/events/map"
+          className="flex-shrink-0 text-sm text-amber-500 hover:text-amber-400 transition-colors duration-150"
+        >
+          Map view
+        </a>
+      </div>
+
+      <div>
+        {initialEvents.length === 0 ? (
+          <p className="py-12 text-center text-sm text-[#555]">No events found</p>
+        ) : (
+          initialEvents.map((event) => (
+            <EventListItem
+              key={event.id}
+              name={event.name}
+              date={event.date}
+              city={event.city}
+              state={event.state}
+              eventType={event.eventType}
+              slug={event.slug}
+              stateCode={event.stateCode}
+            />
+          ))
+        )}
+      </div>
+
+      {totalPages > 1 ? (
+        <div className="flex items-center justify-center gap-2 pt-4">
+          {currentPage > 1 ? (
+            <a
+              href={`/events?${new URLSearchParams({ ...Object.fromEntries(searchParams), page: String(currentPage - 1) }).toString()}`}
+              className="rounded-full px-4 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5 transition-all duration-150"
+            >
+              Previous
+            </a>
+          ) : null}
+          <span className="text-sm text-[#888]">
+            Page {currentPage} of {totalPages}
+          </span>
+          {currentPage < totalPages ? (
+            <a
+              href={`/events?${new URLSearchParams({ ...Object.fromEntries(searchParams), page: String(currentPage + 1) }).toString()}`}
+              className="rounded-full px-4 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5 transition-all duration-150"
+            >
+              Next
+            </a>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
+  )
+}
