@@ -1,4 +1,5 @@
 import { EventBadge } from './EventBadge'
+import { EventClaimStatus } from './EventClaimStatus'
 import type { EventType } from '@/lib/constants'
 
 interface EventDetailHeaderProps {
@@ -7,6 +8,8 @@ interface EventDetailHeaderProps {
   eventType: EventType
   isCharity: boolean
   claimed?: boolean
+  eventId?: string
+  claimStatus?: 'pending' | 'approved' | 'rejected' | null
 }
 
 export function EventDetailHeader({
@@ -14,7 +17,9 @@ export function EventDetailHeader({
   bannerUrl,
   eventType,
   isCharity,
-  claimed = true
+  claimed = true,
+  eventId,
+  claimStatus
 }: EventDetailHeaderProps) {
   return (
     <div className="space-y-4">
@@ -36,15 +41,17 @@ export function EventDetailHeader({
         {name}
       </h1>
 
-      {!claimed ? (
+      {claimStatus ? (
+        <EventClaimStatus status={claimStatus} />
+      ) : !claimed ? (
         <a
-          href="/events/claim"
+          href={eventId ? `/events/claim?eventId=${eventId}` : '#'}
           className="inline-flex items-center gap-1.5 text-sm text-amber-500 hover:text-amber-400 transition-colors duration-150"
         >
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
             <path fillRule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
           </svg>
-          Claim this event
+          Is this your event? Claim it
         </a>
       ) : null}
     </div>

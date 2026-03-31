@@ -22,11 +22,22 @@ describe('EventDetailHeader', () => {
 
   it('renders claim link when event is unclaimed', () => {
     render(<EventDetailHeader {...baseProps} claimed={false} />)
-    expect(screen.getByText(/Claim this event/)).toBeInTheDocument()
+    expect(screen.getByText(/Is this your event\? Claim it/)).toBeInTheDocument()
   })
 
   it('does not render claim link when event is claimed', () => {
     render(<EventDetailHeader {...baseProps} claimed={true} />)
-    expect(screen.queryByText(/Claim this event/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Claim it/)).not.toBeInTheDocument()
+  })
+
+  it('shows claim status when user has a pending claim', () => {
+    render(<EventDetailHeader {...baseProps} claimed={false} claimStatus="pending" />)
+    expect(screen.getByText(/Claim Pending/)).toBeInTheDocument()
+    expect(screen.queryByText(/Claim it/)).not.toBeInTheDocument()
+  })
+
+  it('shows approved claim status', () => {
+    render(<EventDetailHeader {...baseProps} claimed={false} claimStatus="approved" />)
+    expect(screen.getByText(/Claim Approved/)).toBeInTheDocument()
   })
 })

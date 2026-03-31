@@ -22,6 +22,23 @@ async function getEvent(slug: string) {
   return data
 }
 
+async function getUserClaimStatus(eventId: string): Promise<'pending' | 'approved' | 'rejected' | null> {
+  const supabase = await createServer()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return null
+
+  const { data } = await supabase
+    .from('event_claims')
+    .select('status')
+    .eq('event_id', eventId)
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
+
+  return data?.status as 'pending' | 'approved' | 'rejected' | null
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const event = await getEvent(slug)
@@ -55,6 +72,7 @@ export default async function EventDetailPage({ params }: PageProps) {
   if (!event) notFound()
 
   const rsvpCount = event.rsvps?.[0]?.count ?? 0
+  const claimStatus = !event.claimed ? await getUserClaimStatus(event.id) : null
 
   return (
     <main className="min-h-screen bg-[#111113]">
@@ -65,6 +83,8 @@ export default async function EventDetailPage({ params }: PageProps) {
           eventType={event.event_type as EventType}
           isCharity={event.is_charity}
           claimed={event.claimed}
+          eventId={event.id}
+          claimStatus={claimStatus}
         />
 
         <div className="mt-8 grid gap-8 sm:grid-cols-[1fr_auto]">
