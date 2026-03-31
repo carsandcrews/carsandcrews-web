@@ -20,6 +20,7 @@ export interface MapMarker {
   state: string
   eventType: string
   date: string
+  distanceMiles?: number
 }
 
 export function clusterEvents(events: MapEvent[]): MapMarker[] {
