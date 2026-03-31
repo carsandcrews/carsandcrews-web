@@ -15,6 +15,7 @@ interface FeedEvent {
   event_type: EventType
   slug: string
   state_code: string
+  distance_miles?: number | null
 }
 
 interface FeedVehicle {
@@ -66,6 +67,7 @@ export function LandingFeed({ events, vehicles, members }: LandingFeedProps) {
                 eventType={formatEventType(e.event_type)}
                 slug={e.slug}
                 stateCode={e.state_code}
+                distance={e.distance_miles}
               />
             ))}
             {showVehicles && (vehicles.length > 0 ? vehicles : PLACEHOLDER_VEHICLES).map((v) => (
@@ -141,6 +143,7 @@ function MixedFeed({ events, vehicles, members }: LandingFeedProps) {
         eventType={formatEventType(e.event_type)}
         slug={e.slug}
         stateCode={e.state_code}
+        distance={e.distance_miles}
       />
     )
   }
@@ -175,6 +178,7 @@ function MixedFeed({ events, vehicles, members }: LandingFeedProps) {
         eventType={formatEventType(e.event_type)}
         slug={e.slug}
         stateCode={e.state_code}
+        distance={e.distance_miles}
       />
     )
   }
@@ -220,6 +224,7 @@ function MixedFeed({ events, vehicles, members }: LandingFeedProps) {
         eventType={formatEventType(e.event_type)}
         slug={e.slug}
         stateCode={e.state_code}
+        distance={e.distance_miles}
       />
     )
   }

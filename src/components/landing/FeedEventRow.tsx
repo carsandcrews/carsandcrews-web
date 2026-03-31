@@ -8,9 +8,10 @@ interface FeedEventRowProps {
   eventType: string
   slug: string
   stateCode: string
+  distance?: number | null
 }
 
-export function FeedEventRow({ name, date, city, state, eventType, slug, stateCode }: FeedEventRowProps) {
+export function FeedEventRow({ name, date, city, state, eventType, slug, stateCode, distance }: FeedEventRowProps) {
   const d = new Date(date + 'T00:00:00')
   const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()
   const day = d.getDate()
@@ -26,7 +27,7 @@ export function FeedEventRow({ name, date, city, state, eventType, slug, stateCo
       </div>
       <div className="min-w-0 flex-1">
         <div className="truncate text-[15px] font-semibold text-text-primary">{name}</div>
-        <div className="text-xs text-text-faint">{city}, {state} · {eventType}</div>
+        <div className="text-xs text-text-faint">{city}, {state}{distance != null ? ` · ${Math.round(distance)} mi` : ''} · {eventType}</div>
       </div>
       <span className="flex-shrink-0 text-xs font-semibold text-accent">RSVP</span>
     </Link>
