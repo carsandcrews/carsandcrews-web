@@ -2,9 +2,11 @@ import { headers } from 'next/headers'
 import { createServer } from '@/lib/supabase/server'
 import { US_STATES, type EventType } from '@/lib/constants'
 import { parseVercelHeaders } from '@/lib/location/detect'
-import { FeaturedStrip } from '@/components/landing/FeaturedStrip'
+import { HeroTagline } from '@/components/landing/HeroTagline'
+import { ActionCards } from '@/components/landing/ActionCards'
 import { SearchBarLanding } from '@/components/landing/SearchBarLanding'
-import { LandingFeed } from '@/components/landing/LandingFeed'
+import { EventFeed } from '@/components/landing/EventFeed'
+import { TrendingBuilds } from '@/components/landing/TrendingBuilds'
 
 function stateToCode(state: string): string {
   const found = US_STATES.find(s => s.name.toLowerCase() === state.toLowerCase() || s.code.toLowerCase() === state.toLowerCase())
@@ -42,14 +44,13 @@ export default async function HomePage() {
         distance_miles: e.distance_miles as number,
       }))
     } else {
-      // No nearby events — fall back to standard query
       events = await fetchFallbackEvents(supabase, today, thirtyDays)
     }
   } else {
     events = await fetchFallbackEvents(supabase, today, thirtyDays)
   }
 
-  const [vehiclesRes, membersRes] = await Promise.all([
+  const [vehiclesRes, eventCountRes] = await Promise.all([
     supabase
       .from('vehicles')
       .select('year, make, model, slug, vehicle_photos(url, position), profiles(username)')
@@ -57,10 +58,9 @@ export default async function HomePage() {
       .order('created_at', { ascending: false })
       .limit(6),
     supabase
-      .from('profiles')
-      .select('username, display_name, avatar_url, tagline')
-      .order('created_at', { ascending: false })
-      .limit(4),
+      .from('events')
+      .select('id', { count: 'exact', head: true })
+      .eq('status', 'published'),
   ])
 
   const vehicles = (vehiclesRes.data ?? []).map((v: Record<string, unknown>) => {
@@ -76,45 +76,16 @@ export default async function HomePage() {
     }
   })
 
-  const members = (membersRes.data ?? []).map((m) => ({
-    username: m.username,
-    display_name: m.display_name,
-    avatar_url: m.avatar_url,
-    tagline: m.tagline,
-  }))
-
-  // Featured: first event with a banner, or first event
-  const featuredEvent = events.length > 0
-    ? {
-        name: events[0].name,
-        date: events[0].date,
-        city: events[0].city,
-        state: events[0].state,
-        slug: events[0].slug,
-        stateCode: stateToCode(events[0].state),
-        bannerUrl: null as string | null,
-      }
-    : null
-
-  const featuredVehicle = vehicles.length > 0
-    ? {
-        year: vehicles[0].year,
-        make: vehicles[0].make,
-        model: vehicles[0].model,
-        slug: vehicles[0].slug,
-        photoUrl: vehicles[0].photo_url,
-        ownerName: vehicles[0].owner_name,
-        statusTag: 'Restored',
-      }
-    : null
-
+  const eventCount = eventCountRes.count ?? 0
   const locationStr = location ? `${location.city}, ${location.state}` : null
 
   return (
     <div className="mx-auto w-full max-w-3xl">
-      <FeaturedStrip event={featuredEvent} vehicle={featuredVehicle} />
+      <HeroTagline />
+      <ActionCards eventCount={eventCount} />
       <SearchBarLanding location={locationStr} />
-      <LandingFeed events={events} vehicles={vehicles} members={members} />
+      <EventFeed events={events} />
+      <TrendingBuilds vehicles={vehicles} />
     </div>
   )
 }

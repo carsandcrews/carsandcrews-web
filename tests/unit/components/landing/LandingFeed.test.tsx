@@ -70,9 +70,9 @@ describe('LandingFeed', () => {
     expect(screen.getByText('@lone_star')).toBeInTheDocument()
   })
 
-  it('shows empty message when no content for filter', () => {
+  it('shows placeholder events when given empty arrays', () => {
     render(<LandingFeed events={[]} vehicles={[]} members={[]} />)
     fireEvent.click(screen.getByText('Events'))
-    expect(screen.getByText('Nothing here yet. Check back soon.')).toBeInTheDocument()
+    expect(screen.getByText('Saturday Cruise-In at Sonic')).toBeInTheDocument()
   })
 })
