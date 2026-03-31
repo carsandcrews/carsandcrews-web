@@ -201,11 +201,12 @@ export default async function EventDetailPage({ params }: PageProps) {
           <div className="mt-8 border-t border-white/5 pt-6">
             <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-[#888]">Location</h2>
             <div className="aspect-[16/9] overflow-hidden rounded-xl bg-[#1a1a1d]">
-              <img
-                src={`https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/pin-s+f59e0b(${event.lng},${event.lat})/${event.lng},${event.lat},13,0/800x450?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN || ''}`}
-                alt={`Map showing ${event.location_name || event.city}`}
-                className="h-full w-full object-cover"
+              <iframe
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${Number(event.lng)-0.02},${Number(event.lat)-0.01},${Number(event.lng)+0.02},${Number(event.lat)+0.01}&layer=mapnik&marker=${event.lat},${event.lng}`}
+                title={`Map showing ${event.location_name || event.city}`}
+                className="h-full w-full border-0"
                 loading="lazy"
+                allowFullScreen
               />
             </div>
           </div>
