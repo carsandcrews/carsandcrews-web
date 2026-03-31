@@ -14,11 +14,11 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: vi.fn(), refresh: vi.fn() })
 }))
 
-beforeEach(() => {
-  cleanup()
-})
-
 describe('Sign In Page', () => {
+  beforeEach(() => {
+    cleanup()
+  })
+
   it('renders email and password fields', async () => {
     const { default: SignInPage } = await import('@/app/(auth)/sign-in/page')
     render(<SignInPage />)
