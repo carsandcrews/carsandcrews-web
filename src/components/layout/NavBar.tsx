@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
+import { ThemeToggle } from './ThemeToggle'
 
 const NAV_LINKS = [
   { label: 'Events', href: '/events' },
@@ -43,8 +44,9 @@ export function NavBar() {
           </div>
         </div>
 
-        {/* Right: auth buttons (desktop) */}
+        {/* Right: auth buttons + theme toggle (desktop) */}
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           {user ? (
             <Link
               href="/dashboard"
@@ -70,10 +72,12 @@ export function NavBar() {
           )}
         </div>
 
-        {/* Mobile: hamburger */}
-        <button
-          className="inline-flex items-center justify-center rounded-lg p-2 text-text-muted transition-colors hover:bg-surface hover:text-text-primary md:hidden"
-          onClick={() => setMenuOpen(!menuOpen)}
+        {/* Mobile: theme toggle + hamburger */}
+        <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
+          <button
+            className="inline-flex items-center justify-center rounded-lg p-2 text-text-muted transition-colors hover:bg-surface hover:text-text-primary"
+            onClick={() => setMenuOpen((prev) => !prev)}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
         >
@@ -82,7 +86,8 @@ export function NavBar() {
           ) : (
             <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" /></svg>
           )}
-        </button>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
