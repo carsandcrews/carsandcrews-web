@@ -9,6 +9,18 @@ const withSerwist = withSerwistInit({
 
 const nextConfig: NextConfig = {
   turbopack: {},
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets.carsandcrews.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.r2.dev',
+      },
+    ],
+  },
 };
 
 export default withSerwist(nextConfig);
