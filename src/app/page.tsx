@@ -1,5 +1,11 @@
 import { createServer } from '@/lib/supabase/server'
+import { US_STATES } from '@/lib/constants'
 import { FeaturedStrip } from '@/components/landing/FeaturedStrip'
+
+function stateToCode(state: string): string {
+  const found = US_STATES.find(s => s.name.toLowerCase() === state.toLowerCase() || s.code.toLowerCase() === state.toLowerCase())
+  return found ? found.code.toLowerCase() : state.toLowerCase().replace(/\s+/g, '-')
+}
 import { SearchBarLanding } from '@/components/landing/SearchBarLanding'
 import { LandingFeed } from '@/components/landing/LandingFeed'
 
@@ -13,7 +19,7 @@ export default async function HomePage() {
   const [eventsRes, vehiclesRes, membersRes] = await Promise.all([
     supabase
       .from('events')
-      .select('name, date, city, state, event_type, slug, state_code, banner_url, status')
+      .select('name, date, city, state, event_type, slug, banner_url, status')
       .eq('status', 'published')
       .gte('date', today)
       .lte('date', thirtyDays)
@@ -38,7 +44,7 @@ export default async function HomePage() {
     state: e.state,
     event_type: e.event_type,
     slug: e.slug,
-    state_code: e.state_code,
+    state_code: stateToCode(e.state),
   }))
 
   const vehicles = (vehiclesRes.data ?? []).map((v: Record<string, unknown>) => ({
@@ -65,7 +71,7 @@ export default async function HomePage() {
         city: events[0].city,
         state: events[0].state,
         slug: events[0].slug,
-        stateCode: events[0].state_code,
+        stateCode: stateToCode(events[0].state),
         bannerUrl: (eventsRes.data?.[0] as Record<string, unknown>)?.banner_url as string | null,
       }
     : null
