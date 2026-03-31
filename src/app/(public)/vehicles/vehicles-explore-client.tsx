@@ -15,6 +15,7 @@ interface VehicleItem {
   slug: string
   photoUrl: string | null
   ownerName: string
+  ownerUsername: string
 }
 
 interface VehiclesExploreClientProps {
@@ -78,6 +79,7 @@ export function VehiclesExploreClient({
               slug={v.slug}
               photoUrl={v.photoUrl}
               ownerName={v.ownerName}
+              ownerUsername={v.ownerUsername}
             />
           ))}
         </div>

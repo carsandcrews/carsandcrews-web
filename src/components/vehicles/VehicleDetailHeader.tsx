@@ -46,7 +46,7 @@ export function VehicleDetailHeader({
       </h1>
 
       <a
-        href={`/${ownerUsername}`}
+        href={`/@${ownerUsername}`}
         className="inline-flex items-center gap-1.5 text-sm text-[#888] hover:text-[#f5f5f0] transition-colors duration-150"
       >
         Owned by {ownerName}

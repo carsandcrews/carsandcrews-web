@@ -5,6 +5,11 @@ import { VehicleCard } from '@/components/vehicles/VehicleCard'
 import { formatEventDate, formatEventType } from '@/lib/utils'
 import type { VehicleStatusTag, EventType } from '@/lib/constants'
 
+const RESERVED_ROUTES = new Set([
+  'events', 'vehicles', 'admin', 'settings', 'dashboard',
+  'sign-in', 'sign-up', 'map', 'garage', 'api', '_next',
+])
+
 interface PageProps {
   params: Promise<{ username: string }>
 }
@@ -48,7 +53,9 @@ async function getUpcomingRsvps(userId: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { username } = await params
-  const profile = await getProfile(username)
+  const cleanUsername = username.startsWith('@') ? username.slice(1) : username
+  if (RESERVED_ROUTES.has(cleanUsername)) return { title: 'Not Found' }
+  const profile = await getProfile(cleanUsername)
   if (!profile) return { title: 'Profile Not Found' }
 
   const title = `${profile.display_name} (@${profile.username}) | Cars & Crews`
@@ -75,7 +82,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProfilePage({ params }: PageProps) {
   const { username } = await params
-  const profile = await getProfile(username)
+  const cleanUsername = username.startsWith('@') ? username.slice(1) : username
+  if (RESERVED_ROUTES.has(cleanUsername)) notFound()
+  const profile = await getProfile(cleanUsername)
   if (!profile) notFound()
 
   const vehicles = await getVehicles(profile.id)
@@ -150,6 +159,7 @@ export default async function ProfilePage({ params }: PageProps) {
                     slug={v.slug as string}
                     photoUrl={hero?.thumbnail_url || hero?.url || null}
                     ownerName={profile.display_name}
+                    ownerUsername={profile.username}
                   />
                 )
               })}

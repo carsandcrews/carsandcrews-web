@@ -8,25 +8,34 @@ import { PhotoGallery } from '@/components/photos/PhotoGallery'
 import type { VehicleStatusTag } from '@/lib/constants'
 
 interface PageProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ username: string; vehicleSlug: string }>
 }
 
-async function getVehicle(slug: string) {
+async function getVehicle(username: string, vehicleSlug: string) {
+  const cleanUsername = username.startsWith('@') ? username.slice(1) : username
   const supabase = await createServer()
   const { data } = await supabase
     .from('vehicles')
     .select('*, vehicle_photos(*), vehicle_specs(*), owner:profiles!owner_id(username, display_name, avatar_url)')
-    .eq('slug', slug)
+    .eq('slug', vehicleSlug)
     .eq('visibility', 'public')
     .single()
+
+  if (!data) return null
+
+  // Verify the vehicle belongs to the requested username
+  const owner = data.owner as { username: string; display_name: string; avatar_url: string | null } | null
+  if (!owner || owner.username !== cleanUsername) return null
+
   return data
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params
-  const vehicle = await getVehicle(slug)
+  const { username, vehicleSlug } = await params
+  const vehicle = await getVehicle(username, vehicleSlug)
   if (!vehicle) return { title: 'Vehicle Not Found' }
 
+  const cleanUsername = username.startsWith('@') ? username.slice(1) : username
   const title = `${vehicle.year} ${vehicle.make} ${vehicle.model} | Cars & Crews`
   const description = vehicle.description
     ? vehicle.description.slice(0, 160)
@@ -38,10 +47,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    alternates: {
+      canonical: `/@${cleanUsername}/${vehicleSlug}`
+    },
     openGraph: {
       title: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
       description,
       type: 'website',
+      url: `/@${cleanUsername}/${vehicleSlug}`,
       ...(heroUrl ? { images: [{ url: heroUrl }] } : {})
     },
     twitter: {
@@ -53,8 +66,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function VehicleDetailPage({ params }: PageProps) {
-  const { slug } = await params
-  const vehicle = await getVehicle(slug)
+  const { username, vehicleSlug } = await params
+  const vehicle = await getVehicle(username, vehicleSlug)
   if (!vehicle) notFound()
 
   const photos = (vehicle.vehicle_photos || [])

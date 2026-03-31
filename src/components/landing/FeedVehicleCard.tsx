@@ -7,14 +7,16 @@ interface FeedVehicleCardProps {
   slug: string
   photoUrl: string | null
   ownerName: string
+  ownerUsername?: string
   aspect?: '21/9' | '16/10' | '4/3'
 }
 
-export function FeedVehicleCard({ year, make, model, slug, photoUrl, ownerName, aspect = '21/9' }: FeedVehicleCardProps) {
+export function FeedVehicleCard({ year, make, model, slug, photoUrl, ownerName, ownerUsername, aspect = '21/9' }: FeedVehicleCardProps) {
   const title = `'${String(year).slice(-2)} ${make} ${model}`
+  const linkUsername = ownerUsername || ownerName
 
   return (
-    <Link href={`/vehicles/${slug}`} className="group my-5 block overflow-hidden rounded-2xl">
+    <Link href={`/@${linkUsername}/${slug}`} className="group my-5 block overflow-hidden rounded-2xl">
       <div className="relative overflow-hidden" style={{ aspectRatio: aspect }}>
         {photoUrl ? (
           <img

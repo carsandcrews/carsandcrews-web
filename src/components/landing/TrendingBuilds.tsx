@@ -49,7 +49,7 @@ export function TrendingBuilds({ vehicles }: TrendingBuildsProps) {
           return (
             <Link
               key={v.slug}
-              href={`/vehicles/${v.slug}`}
+              href={`/@${v.owner_name}/${v.slug}`}
               className="group flex-shrink-0 overflow-hidden rounded-[14px]"
               style={{ width: 200 }}
             >

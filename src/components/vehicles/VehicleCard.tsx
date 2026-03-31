@@ -8,6 +8,7 @@ interface VehicleCardProps {
   slug: string
   photoUrl: string | null
   ownerName: string
+  ownerUsername: string
 }
 
 export function VehicleCard({
@@ -17,13 +18,14 @@ export function VehicleCard({
   statusTag,
   slug,
   photoUrl,
-  ownerName
+  ownerName,
+  ownerUsername
 }: VehicleCardProps) {
   const title = `${year} ${make} ${model}`
 
   return (
     <a
-      href={`/vehicles/${slug}`}
+      href={`/@${ownerUsername}/${slug}`}
       className="group block overflow-hidden rounded-2xl bg-[#1a1a1d] border border-white/[0.04] transition-all duration-200 hover:border-white/10 hover:shadow-lg"
     >
       <div className="relative aspect-[4/3] overflow-hidden">

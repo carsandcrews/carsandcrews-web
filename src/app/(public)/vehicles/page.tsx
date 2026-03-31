@@ -25,7 +25,7 @@ export default async function VehiclesExplorePage({ searchParams }: PageProps) {
   const supabase = await createServer()
   let query = supabase
     .from('vehicles')
-    .select('id, year, make, model, status_tag, slug, vehicle_photos(url, thumbnail_url, position), owner:profiles!owner_id(display_name)', { count: 'exact' })
+    .select('id, year, make, model, status_tag, slug, vehicle_photos(url, thumbnail_url, position), owner:profiles!owner_id(username, display_name)', { count: 'exact' })
     .eq('visibility', 'public')
     .order('created_at', { ascending: false })
 
@@ -45,7 +45,7 @@ export default async function VehiclesExplorePage({ searchParams }: PageProps) {
   const vehicles = (data || []).map((v: Record<string, unknown>) => {
     const photos = (v.vehicle_photos as Array<{ url: string; thumbnail_url: string | null; position: number }>) || []
     const hero = photos.sort((a, b) => a.position - b.position)[0]
-    const owner = v.owner as { display_name: string } | null
+    const owner = v.owner as { username: string; display_name: string } | null
     return {
       id: v.id as string,
       year: v.year as number,
@@ -54,7 +54,8 @@ export default async function VehiclesExplorePage({ searchParams }: PageProps) {
       statusTag: v.status_tag as VehicleStatusTag,
       slug: v.slug as string,
       photoUrl: hero?.thumbnail_url || hero?.url || null,
-      ownerName: owner?.display_name || 'Unknown'
+      ownerName: owner?.display_name || 'Unknown',
+      ownerUsername: owner?.username || ''
     }
   })
 
