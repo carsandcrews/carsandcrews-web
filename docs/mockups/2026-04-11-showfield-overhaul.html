@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cars &amp; Crews — Showfield Overhaul Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0e10;
+    --surface: #17181b;
+    --surface-2: #1f2024;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.16);
+    --text: #e8e6e1;
+    --text-muted: #8a8a8e;
+    --text-faint: #55565b;
+    --accent: #b3261a;
+    --accent-hover: #8e1d13;
+    --accent-ink: #f5f5f0;
+    --font-display: 'Bebas Neue', Impact, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #050506; font-family: var(--font-body); color: var(--text); }
+  body { padding: 32px; min-height: 100vh; }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  .caption { text-align: center; font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; font-family: var(--font-display); }
+  .frame {
+    background: var(--bg);
+    border: 1px solid #1a1a1e;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+
+  /* NAV */
+  nav.topbar {
+    position: relative;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 32px;
+    background: rgba(13,14,16,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 5;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; position: relative; }
+  .brand-mark {
+    width: 26px; height: 26px;
+    background: var(--accent);
+    transform: skew(-8deg) rotate(0deg);
+    display: grid; place-items: center;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 6px 16px rgba(179,38,26,0.35);
+  }
+  .brand-mark span {
+    font-family: var(--font-display);
+    color: var(--accent-ink);
+    font-size: 15px;
+    transform: skew(8deg);
+    letter-spacing: 0.5px;
+  }
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: var(--text);
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    font-family: var(--font-display);
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  .nav-links a.active { color: var(--text); border-bottom-color: var(--accent); }
+  .nav-actions { display: flex; gap: 10px; }
+
+  /* BUTTONS */
+  .btn {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 15px;
+    height: 40px;
+    padding: 0 18px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+  .btn-secondary:hover { background: var(--surface-2); }
+  .btn-ghost { background: transparent; color: var(--text-muted); padding: 0; height: auto; }
+  .btn-ghost:hover { color: var(--accent); }
+  .btn-lg { height: 48px; padding: 0 28px; font-size: 17px; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 560px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 80px 64px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 45% at 72% 55%, rgba(60,70,85,0.45) 0%, rgba(20,22,26,0.1) 55%, transparent 75%),
+      radial-gradient(ellipse 40% 30% at 68% 70%, rgba(179,38,26,0.15) 0%, transparent 60%),
+      linear-gradient(135deg, #0a0b0d 0%, #14161a 40%, #1c1e24 65%, #0f1113 100%);
+    z-index: 0;
+  }
+  .hero-bg::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(90deg, transparent 49.8%, rgba(255,255,255,0.03) 50%, transparent 50.2%),
+      linear-gradient(0deg, transparent 49.8%, rgba(255,255,255,0.02) 50%, transparent 50.2%);
+    background-size: 80px 80px;
+    opacity: 0.4;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(13,14,16,0.96) 0%, rgba(13,14,16,0.7) 48%, rgba(13,14,16,0.15) 100%);
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+  }
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6.5vw, 5.5rem);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    margin-bottom: 32px;
+    text-wrap: balance;
+  }
+  .hero-headline .accent { color: var(--accent); }
+  .hero-cta { display: flex; gap: 20px; align-items: center; }
+
+  /* TRIPTYCH */
+  .triptych {
+    position: relative;
+    z-index: 3;
+    margin: -72px 64px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .card {
+    background: var(--surface);
+    border-top: 2px solid var(--accent);
+    padding: 24px 22px;
+    min-height: 160px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: background .15s;
+    cursor: pointer;
+  }
+  .card:hover { background: var(--surface-2); }
+  .card-eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--text);
+    line-height: 1.35;
+    margin-bottom: 8px;
+  }
+  .card-meta {
+    margin-top: auto;
+    font-size: 12px;
+    color: var(--text-faint);
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card-meta .arrow { color: var(--text-muted); }
+
+  /* SECTIONS */
+  .section {
+    padding: 72px 64px 32px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .section-header::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 56px;
+    height: 2px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+  }
+  .section-link {
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .section-link:hover { color: var(--accent); }
+
+  /* EVENT FEED */
+  .event-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .event-row {
+    background: var(--surface);
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    transition: background .15s;
+    cursor: pointer;
+  }
+  .event-row:hover { background: var(--surface-2); }
+  .event-date {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+  .event-date .day { display: block; font-size: 28px; color: var(--text); letter-spacing: 0; }
+  .event-info .name { font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .event-info .meta { font-size: 13px; color: var(--text-faint); }
+  .event-distance { font-size: 13px; color: var(--text-muted); font-family: var(--font-display); letter-spacing: 0.1em; }
+
+  /* TRENDING BUILDS */
+  .builds-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .build-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .15s;
+  }
+  .build-tile:hover { border-color: var(--border-strong); }
+  .build-photo {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #1a1c20 0%, #24272d 50%, #12141a 100%);
+    position: relative;
+    box-shadow: inset 0 0 60px rgba(0,0,0,0.5);
+  }
+  .build-photo::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 60%, rgba(179,38,26,0.08) 0%, transparent 60%);
+  }
+  .build-photo .label {
+    position: absolute;
+    top: 12px; left: 12px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-faint);
+    background: rgba(13,14,16,0.8);
+    padding: 4px 8px;
+    border-left: 2px solid var(--accent);
+  }
+  .build-info { padding: 16px 18px; }
+  .build-title { font-weight: 600; color: var(--text); margin-bottom: 4px; font-size: 15px; }
+  .build-builder { font-size: 12px; color: var(--text-faint); }
+
+  /* FOOTER */
+  footer {
+    margin-top: 64px;
+    padding: 40px 64px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+  }
+  footer .brand-footer { font-family: var(--font-display); color: var(--text); font-size: 18px; letter-spacing: 0.1em; }
+
+  /* DECORATIVE */
+  .note {
+    max-width: 680px;
+    margin: 40px auto 0;
+    text-align: center;
+    color: #555;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .note strong { color: #888; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="caption">Cars &amp; Crews — Showfield Overhaul — Desktop Mockup</div>
+
+  <div class="frame">
+
+    <!-- NAV -->
+    <nav class="topbar">
+      <div class="brand">
+        <div class="brand-mark"><span>C</span></div>
+        <div class="brand-name">CARS &amp; CREWS</div>
+      </div>
+      <div class="nav-links">
+        <a href="#" class="active">Events</a>
+        <a href="#">Vehicles</a>
+        <a href="#">Map</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-secondary" href="#">Sign In</a>
+        <a class="btn btn-primary" href="#">Sign Up</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="eyebrow">Featured Build · 1969 Pontiac GTO</div>
+        <h1 class="hero-headline">Where builds<br>live, <span class="accent">loud.</span></h1>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#">Explore Builds</a>
+          <a class="btn btn-ghost" href="#">Submit Your Build →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRIPTYCH -->
+    <div class="triptych">
+      <a class="card" href="#">
+        <div class="card-eyebrow">Next Event Near You</div>
+        <div class="card-title">Warmuth Cruise-In at Pontiac Plaza</div>
+        <div class="card-meta"><span>Apr 18 · 12 mi away</span><span class="arrow">→</span></div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-eyebrow">Latest Build</div>
+        <div class="card-title">1964 Pontiac Tempest Wagon</div>
+        <div class="card-meta"><span>@kmnord</span><span class="arrow">→</span></div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-eyebrow">Fresh In The Garage</div>
+        <div class="card-title">1971 Chevelle SS 454</div>
+        <div class="card-meta"><span>@crewmember · just added</span><span class="arrow">→</span></div>
+      </a>
+    </div>
+
+    <!-- UPCOMING SHOWS -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Upcoming Shows</h2>
+        <a class="section-link" href="#">View All →</a>
+      </div>
+      <div class="event-list">
+        <div class="event-row">
+          <div class="event-date">Apr<span class="day">18</span></div>
+          <div class="event-info">
+            <div class="name">Warmuth Cruise-In at Pontiac Plaza</div>
+            <div class="meta">Sat 3:00 PM — 8:00 PM · Pontiac, MI</div>
+          </div>
+          <div class="event-distance">12 mi</div>
+        </div>
+        <div class="event-row">
+          <div class="event-date">Apr<span class="day">25</span></div>
+          <div class="event-info">
+            <div class="name">Detroit Autorama Afterglow Meet</div>
+            <div class="meta">Sat 10:00 AM — 4:00 PM · Royal Oak, MI</div>
+          </div>
+          <div class="event-distance">22 mi</div>
+        </div>
+        <div class="event-row">
+          <div class="event-date">May<span class="day">02</span></div>
+          <div class="event-info">
+            <div class="name">Woodward Dream Cruise Prelim</div>
+            <div class="meta">Sat 9:00 AM — 2:00 PM · Ferndale, MI</div>
+          </div>
+          <div class="event-distance">18 mi</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LATEST BUILDS -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Latest Builds</h2>
+        <a class="section-link" href="#">View All →</a>
+      </div>
+      <div class="builds-grid">
+        <div class="build-tile">
+          <div class="build-photo"><div class="label">Restomod</div></div>
+          <div class="build-info">
+            <div class="build-title">1964 Pontiac Tempest Wagon</div>
+            <div class="build-builder">@kmnord</div>
+          </div>
+        </div>
+        <div class="build-tile">
+          <div class="build-photo"><div class="label">Pro Touring</div></div>
+          <div class="build-info">
+            <div class="build-title">1969 Camaro SS</div>
+            <div class="build-builder">@musclecrew</div>
+          </div>
+        </div>
+        <div class="build-tile">
+          <div class="build-photo"><div class="label">Resto</div></div>
+          <div class="build-info">
+            <div class="build-title">1971 Chevelle SS 454</div>
+            <div class="build-builder">@crewmember</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="brand-footer">CARS &amp; CREWS</div>
+      <div>© 2026 · Where builds live</div>
+    </footer>
+
+  </div>
+
+  <div class="note">
+    <strong>Notes:</strong> Hero "photo" here is a CSS gradient placeholder — in the real build it will be the top trending vehicle's primary photo pulled server-side, with the same left-to-right dark gradient overlay. Build tiles use the same treatment. Everything else (tokens, typography, spacing, layout) matches the spec exactly.
+  </div>
+</div>
+
+</body>
+</html>
