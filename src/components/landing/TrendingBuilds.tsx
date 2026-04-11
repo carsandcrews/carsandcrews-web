@@ -20,60 +20,67 @@ const PLACEHOLDER_VEHICLES: Vehicle[] = [
   { year: 1964, make: 'Pontiac', model: 'Tempest', slug: '64-tempest', photo_url: null, owner_name: 'kevnord' },
 ]
 
-const GRADIENT_COLORS = [
-  'from-[#3a2828] via-[#4a2020] to-[#1a1218]',
-  'from-[#1a2a1a] via-[#2a3a2a] to-[#121a12]',
-  'from-[#2a2a1a] via-[#3a3520] to-[#1a1a10]',
-  'from-[#2a201a] via-[#3a3020] to-[#1a1810]',
-]
-
 export function TrendingBuilds({ vehicles }: TrendingBuildsProps) {
   const displayVehicles = vehicles.length > 0 ? vehicles : PLACEHOLDER_VEHICLES
 
   return (
-    <div className="px-4 sm:px-7">
-      <div className="flex items-center justify-between py-3">
-        <div className="text-[11px] font-semibold uppercase tracking-[1.5px] text-text-faint">
-          Trending Builds
-        </div>
-        <Link href="/vehicles" className="text-[11px] font-semibold text-[#60a5fa] hover:text-[#93bbfd]">
-          See all &rarr;
+    <section className="mx-auto max-w-6xl px-6 py-16 sm:px-10 lg:px-16">
+      <div className="relative mb-6 flex items-baseline justify-between border-b border-[var(--border)] pb-4">
+        <h2 className="display text-[32px] uppercase tracking-[0.05em] text-[var(--text)]">
+          Latest Builds
+        </h2>
+        <Link
+          href="/vehicles"
+          className="display text-[13px] uppercase tracking-[0.15em] text-[var(--text-muted)] transition-colors hover:text-[var(--accent)]"
+        >
+          View All →
         </Link>
+        <span className="absolute -bottom-[1px] left-0 h-[2px] w-14 bg-[var(--accent)]" aria-hidden="true" />
       </div>
 
-      <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-7 sm:-mx-7 sm:px-7">
-        {displayVehicles.map((v, i) => {
-          const title = `'${String(v.year).slice(-2)} ${v.make} ${v.model}`
-          const gradient = GRADIENT_COLORS[i % GRADIENT_COLORS.length]
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {displayVehicles.map((v) => {
+          const title = `${v.year} ${v.make} ${v.model}`
 
           return (
             <Link
               key={v.slug}
               href={`/@${v.owner_name}/${v.slug}`}
-              className="group flex-shrink-0 overflow-hidden rounded-[14px]"
-              style={{ width: 200 }}
+              className="group overflow-hidden border border-[var(--border)] bg-[var(--surface)] transition-colors hover:border-[var(--border-strong)]"
             >
-              <div className="relative" style={{ aspectRatio: '4/5' }}>
+              <div className="relative" style={{ aspectRatio: '4/3' }}>
                 {v.photo_url ? (
                   <img
                     src={v.photo_url}
-                    alt={`${v.year} ${v.make} ${v.model}`}
+                    alt={title}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
                     loading="lazy"
                   />
                 ) : (
-                  <div className={`absolute inset-0 bg-gradient-to-br ${gradient}`} />
+                  <div
+                    className="absolute inset-0"
+                    data-testid="vehicle-gradient-placeholder"
+                    style={{
+                      background:
+                        'linear-gradient(135deg, #1a1c20 0%, #24272d 50%, #12141a 100%)',
+                    }}
+                  />
                 )}
-                <div className="absolute inset-0" style={{ boxShadow: 'inset 0 0 40px rgba(0,0,0,0.3)' }} />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a0a12]/95 via-transparent to-transparent p-3 pt-10">
-                  <p className="text-[13px] font-bold text-white">{title}</p>
-                  <p className="mt-0.5 text-[10px] text-[#aaa]">@{v.owner_name}</p>
-                </div>
+                <div className="absolute inset-0 ring-1 ring-inset ring-[var(--border)]" aria-hidden="true" />
+                <div
+                  className="absolute inset-0"
+                  style={{ boxShadow: 'inset 0 0 60px rgba(0,0,0,0.5)' }}
+                  aria-hidden="true"
+                />
+              </div>
+              <div className="p-4">
+                <div className="text-[15px] font-semibold text-[var(--text)]">{title}</div>
+                <div className="mt-1 text-[12px] text-[var(--text-faint)]">@{v.owner_name}</div>
               </div>
             </Link>
           )
         })}
       </div>
-    </div>
+    </section>
   )
 }
