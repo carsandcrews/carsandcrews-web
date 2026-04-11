@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { createBrowserClient } from '@/lib/supabase/client'
 import type { User } from '@supabase/supabase-js'
-import { ThemeToggle } from './ThemeToggle'
 
 const NAV_LINKS = [
   { label: 'Events', href: '/events' },
@@ -45,9 +44,8 @@ export function NavBar() {
           </div>
         </div>
 
-        {/* Right: auth buttons + theme toggle (desktop) */}
+        {/* Right: auth buttons (desktop) */}
         <div className="hidden items-center gap-3 md:flex">
-          <ThemeToggle />
           {user ? (
             <>
               <Link
@@ -81,9 +79,8 @@ export function NavBar() {
           )}
         </div>
 
-        {/* Mobile: theme toggle + hamburger */}
+        {/* Mobile: hamburger */}
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle />
           <button
             className="inline-flex items-center justify-center rounded-lg p-2 text-text-muted transition-colors hover:bg-surface hover:text-text-primary"
             onClick={() => setMenuOpen((prev) => !prev)}
