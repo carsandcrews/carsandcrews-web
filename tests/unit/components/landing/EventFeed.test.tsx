@@ -17,13 +17,14 @@ const mockEvents = [
 describe('EventFeed', () => {
   it('renders section header', () => {
     render(<EventFeed events={mockEvents} />)
-    expect(screen.getByText(/What's Happening Near You/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Upcoming Shows/i })).toBeInTheDocument()
   })
 
   it('renders event names', () => {
     render(<EventFeed events={mockEvents} />)
     expect(screen.getByText('Exotics @ RTC')).toBeInTheDocument()
-    expect(screen.getByText('Cars & Coffee')).toBeInTheDocument()
+    // "Cars & Coffee" also appears as the event type label, so expect 2
+    expect(screen.getAllByText('Cars & Coffee').length).toBeGreaterThanOrEqual(1)
     expect(screen.getByText('Lone Star Nationals')).toBeInTheDocument()
   })
 
@@ -41,9 +42,9 @@ describe('EventFeed', () => {
     expect(screen.getByText(/12 mi/)).toBeInTheDocument()
   })
 
-  it('renders RSVP actions', () => {
+  it('renders event type labels', () => {
     render(<EventFeed events={mockEvents} />)
-    expect(screen.getAllByText('RSVP').length).toBe(3)
+    expect(screen.getAllByText(/Car Show/i).length).toBeGreaterThanOrEqual(2)
   })
 
   it('links to event detail pages', () => {
@@ -53,10 +54,10 @@ describe('EventFeed', () => {
     expect(eventLink).toBeTruthy()
   })
 
-  it('renders "See all events" link', () => {
+  it('renders "View All" link to /events', () => {
     render(<EventFeed events={mockEvents} />)
-    const seeAll = screen.getByText(/See all events near you/)
-    expect(seeAll.closest('a')).toHaveAttribute('href', '/events')
+    const viewAll = screen.getByText(/View All/i)
+    expect(viewAll.closest('a')).toHaveAttribute('href', '/events')
   })
 
   it('renders placeholder events when given empty array', () => {

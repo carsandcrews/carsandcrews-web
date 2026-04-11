@@ -16,13 +16,13 @@ const mockVehicles = [
 describe('TrendingBuilds', () => {
   it('renders section header', () => {
     render(<TrendingBuilds vehicles={mockVehicles} />)
-    expect(screen.getByText('Trending Builds')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Latest Builds/i })).toBeInTheDocument()
   })
 
-  it('renders vehicle names with abbreviated years', () => {
+  it('renders full vehicle names', () => {
     render(<TrendingBuilds vehicles={mockVehicles} />)
-    expect(screen.getByText("'69 Chevrolet Camaro SS")).toBeInTheDocument()
-    expect(screen.getByText("'57 Chevrolet Bel Air")).toBeInTheDocument()
+    expect(screen.getByText('1969 Chevrolet Camaro SS')).toBeInTheDocument()
+    expect(screen.getByText('1957 Chevrolet Bel Air')).toBeInTheDocument()
   })
 
   it('renders owner names', () => {
@@ -31,17 +31,17 @@ describe('TrendingBuilds', () => {
     expect(screen.getByText('@classic_joe')).toBeInTheDocument()
   })
 
-  it('links to vehicle detail pages', () => {
+  it('links to profile vehicle detail pages', () => {
     render(<TrendingBuilds vehicles={mockVehicles} />)
     const links = screen.getAllByRole('link')
-    const vehicleLink = links.find(l => l.getAttribute('href') === '/vehicles/69-camaro-ss')
+    const vehicleLink = links.find((l) => l.getAttribute('href') === '/@mike_builds/69-camaro-ss')
     expect(vehicleLink).toBeTruthy()
   })
 
-  it('renders "See all" link to vehicles page', () => {
+  it('renders "View All" link to /vehicles', () => {
     render(<TrendingBuilds vehicles={mockVehicles} />)
-    const seeAll = screen.getByText(/See all/)
-    expect(seeAll.closest('a')).toHaveAttribute('href', '/vehicles')
+    const viewAll = screen.getByText(/View All/i)
+    expect(viewAll.closest('a')).toHaveAttribute('href', '/vehicles')
   })
 
   it('renders image when photo_url is provided', () => {
@@ -51,14 +51,13 @@ describe('TrendingBuilds', () => {
   })
 
   it('renders gradient placeholder when no photo', () => {
-    const { container } = render(<TrendingBuilds vehicles={[mockVehicles[0]]} />)
-    const gradientDiv = container.querySelector('[class*="bg-gradient"]')
-    expect(gradientDiv).toBeInTheDocument()
+    render(<TrendingBuilds vehicles={[mockVehicles[0]]} />)
+    expect(screen.getByTestId('vehicle-gradient-placeholder')).toBeInTheDocument()
   })
 
   it('renders placeholder vehicles when given empty array', () => {
     render(<TrendingBuilds vehicles={[]} />)
-    expect(screen.getByText("'69 Chevrolet Camaro SS")).toBeInTheDocument()
-    expect(screen.getByText("'57 Chevrolet Bel Air")).toBeInTheDocument()
+    expect(screen.getByText('1969 Chevrolet Camaro SS')).toBeInTheDocument()
+    expect(screen.getByText('1957 Chevrolet Bel Air')).toBeInTheDocument()
   })
 })
