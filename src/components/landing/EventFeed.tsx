@@ -28,8 +28,7 @@ function isThisWeekend(dateStr: string): boolean {
 function formatSubtitle(event: FeedEvent): string {
   const d = new Date(event.date + 'T00:00:00')
   const day = d.toLocaleDateString('en-US', { weekday: 'long' })
-  const parts = [day]
-  parts.push(`${event.city}, ${event.state}`)
+  const parts = [day, `${event.city}, ${event.state}`]
   if (event.distance_miles != null) {
     parts.push(`${Math.round(event.distance_miles)} mi`)
   }
@@ -40,49 +39,56 @@ export function EventFeed({ events }: EventFeedProps) {
   const displayEvents = events.length > 0 ? events : PLACEHOLDER_EVENTS
 
   return (
-    <div className="px-4 sm:px-7">
-      <div className="pb-3 pt-4 text-[11px] font-semibold uppercase tracking-[1.5px] text-text-faint">
-        What&apos;s Happening Near You
-      </div>
-
-      {displayEvents.map((event, i) => {
-        const d = new Date(event.date + 'T00:00:00')
-        const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()
-        const day = d.getDate()
-        const weekend = i === 0 && isThisWeekend(event.date)
-
-        return (
-          <Link
-            key={event.slug}
-            href={`/events/${event.state_code.toLowerCase()}/${event.slug}`}
-            className="flex items-center gap-3.5 border-b border-white/[0.04] py-3.5 transition-colors duration-150 hover:bg-surface/50"
-          >
-            <div className="w-[46px] flex-shrink-0 text-center">
-              <div className="text-[10px] font-bold text-accent">{month}</div>
-              <div className="text-[22px] font-black leading-none text-white">{day}</div>
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="mb-0.5 flex items-center gap-2">
-                <span className="truncate text-sm font-semibold text-white">{event.name}</span>
-                {weekend && (
-                  <span className="flex-shrink-0 rounded-[10px] bg-accent/15 px-2 py-0.5 text-[9px] font-bold text-accent">
-                    THIS WEEKEND
-                  </span>
-                )}
-              </div>
-              <div className="text-[11px] text-text-faint">{formatSubtitle(event)}</div>
-            </div>
-            <span className="flex-shrink-0 text-[11px] font-semibold text-accent">RSVP</span>
-          </Link>
-        )
-      })}
-
-      <div className="py-3">
-        <Link href="/events" className="text-xs font-semibold text-accent hover:text-accent-hover">
-          See all events near you &rarr;
+    <section className="mx-auto max-w-6xl px-6 py-16 sm:px-10 lg:px-16">
+      <div className="relative mb-6 flex items-baseline justify-between border-b border-[var(--border)] pb-4">
+        <h2 className="display text-[32px] uppercase tracking-[0.05em] text-[var(--text)]">
+          Upcoming Shows
+        </h2>
+        <Link
+          href="/events"
+          className="display text-[13px] uppercase tracking-[0.15em] text-[var(--text-muted)] transition-colors hover:text-[var(--accent)]"
+        >
+          View All →
         </Link>
+        <span className="absolute -bottom-[1px] left-0 h-[2px] w-14 bg-[var(--accent)]" aria-hidden="true" />
       </div>
-    </div>
+
+      <div className="flex flex-col gap-px border border-[var(--border)] bg-[var(--border)]">
+        {displayEvents.map((event, i) => {
+          const d = new Date(event.date + 'T00:00:00')
+          const month = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()
+          const day = d.getDate()
+          const weekend = i === 0 && isThisWeekend(event.date)
+
+          return (
+            <Link
+              key={event.slug}
+              href={`/events/${event.state_code.toLowerCase()}/${event.slug}`}
+              className="grid grid-cols-[80px_1fr_auto] items-center gap-5 bg-[var(--surface)] px-6 py-4 transition-colors hover:bg-[var(--surface-2)]"
+            >
+              <div className="display leading-[1.1]">
+                <div className="text-[14px] uppercase tracking-[0.1em] text-[var(--accent)]">{month}</div>
+                <div className="text-[28px] text-[var(--text)]">{day}</div>
+              </div>
+              <div className="min-w-0">
+                <div className="mb-1 flex items-center gap-2">
+                  <span className="truncate text-[15px] font-semibold text-[var(--text)]">{event.name}</span>
+                  {weekend && (
+                    <span className="display flex-shrink-0 bg-[var(--accent)] px-2 py-0.5 text-[10px] uppercase tracking-[0.12em] text-[var(--accent-ink)]">
+                      This Weekend
+                    </span>
+                  )}
+                </div>
+                <div className="text-[12px] text-[var(--text-faint)]">{formatSubtitle(event)}</div>
+              </div>
+              <span className="display text-[12px] uppercase tracking-[0.15em] text-[var(--text-muted)]">
+                {formatEventType(event.event_type)}
+              </span>
+            </Link>
+          )
+        })}
+      </div>
+    </section>
   )
 }
 
