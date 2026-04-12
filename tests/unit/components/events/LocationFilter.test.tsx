@@ -37,7 +37,7 @@ describe('LocationFilter', () => {
 
   it('shows empty state with input when no center', () => {
     render(<LocationFilter center={null} />)
-    expect(screen.getByPlaceholderText('ZIP code')).toBeTruthy()
+    expect(screen.getByPlaceholderText('Enter ZIP code')).toBeTruthy()
   })
 
   it('highlights active radius chip', () => {

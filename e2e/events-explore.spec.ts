@@ -32,13 +32,13 @@ test.describe('Events explore page', () => {
 test.describe('Location filter', () => {
   test('displays location filter area', async ({ page }) => {
     await page.goto('/events')
-    await expect(page.getByPlaceholder('ZIP code')).toBeVisible()
+    await expect(page.getByPlaceholder('Enter ZIP code')).toBeVisible()
     await expect(page.getByLabel('Use GPS location')).toBeVisible()
   })
 
   test('ZIP entry updates URL', async ({ page }) => {
     await page.goto('/events')
-    const zipInput = page.getByPlaceholder('ZIP code')
+    const zipInput = page.getByPlaceholder('Enter ZIP code')
     await zipInput.fill('78701')
     await zipInput.press('Enter')
     await expect(page).toHaveURL(/zip=78701/)

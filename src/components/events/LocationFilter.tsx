@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { VALID_RADII, type ResolvedCenter } from '@/lib/location/types'
 
@@ -15,6 +15,17 @@ export function LocationFilter({ center }: LocationFilterProps) {
   const [zipInput, setZipInput] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [gpsLoading, setGpsLoading] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  function handleLocationClick() {
+    if (center && !editing) {
+      setEditing(true)
+      // Focus input after state update
+      setTimeout(() => inputRef.current?.focus(), 0)
+    } else {
+      inputRef.current?.focus()
+    }
+  }
 
   const activeRadius = center?.radius ?? 100
 
@@ -110,35 +121,35 @@ export function LocationFilter({ center }: LocationFilterProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
-        {/* Location display / input */}
-        <div className="flex items-center gap-2 flex-1 min-w-0">
-          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-[#555] flex-shrink-0">
+        {/* Location display / input — whole area is clickable */}
+        <div
+          onClick={handleLocationClick}
+          className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer rounded-full py-2 px-3 -mx-3 hover:bg-white/[0.03] transition-colors"
+        >
+          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-[#888] flex-shrink-0">
             <path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.274 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clipRule="evenodd" />
           </svg>
 
           {editing || !center ? (
-            <div className="flex items-center gap-2 flex-1">
-              <input
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                maxLength={5}
-                placeholder="ZIP code"
-                value={zipInput}
-                onChange={(e) => { setZipInput(e.target.value); setError(null) }}
-                onKeyDown={(e) => { if (e.key === 'Enter') handleZipSubmit() }}
-                onBlur={() => { if (!zipInput && center) setEditing(false) }}
-                autoFocus={editing}
-                className="w-20 bg-transparent text-sm text-[#f5f5f0] placeholder:text-[#444] focus:outline-none border-b border-white/10 focus:border-amber-500/50 transition-colors"
-              />
-            </div>
+            <input
+              ref={inputRef}
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={5}
+              placeholder="Enter ZIP code"
+              value={zipInput}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => { setZipInput(e.target.value); setError(null) }}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleZipSubmit() }}
+              onBlur={() => { if (!zipInput && center) setEditing(false) }}
+              autoFocus={editing}
+              className="w-28 bg-transparent text-sm text-[#f5f5f0] placeholder:text-[#666] focus:outline-none"
+            />
           ) : (
-            <button
-              onClick={() => setEditing(true)}
-              className="text-sm text-[#f5f5f0] hover:text-amber-400 transition-colors truncate"
-            >
+            <span className="text-sm text-[#f5f5f0] truncate">
               {center.label}
-            </button>
+            </span>
           )}
 
           {sourceBadge && !editing && center && (
@@ -149,7 +160,7 @@ export function LocationFilter({ center }: LocationFilterProps) {
 
           {center && !editing && (
             <button
-              onClick={handleClear}
+              onClick={(e) => { e.stopPropagation(); handleClear() }}
               className="text-[#555] hover:text-[#999] transition-colors flex-shrink-0"
               aria-label="Clear location"
             >
