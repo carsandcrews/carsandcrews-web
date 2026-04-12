@@ -4,7 +4,6 @@ import { createServer } from '@/lib/supabase/server'
 import { resolveCenter } from '@/lib/location/resolve'
 import { EventsExploreClient } from './events-explore-client'
 import type { EventType } from '@/lib/constants'
-import type { ResolvedCenter } from '@/lib/location/types'
 
 export const metadata: Metadata = {
   title: 'Events | Cars & Crews',
@@ -12,6 +11,7 @@ export const metadata: Metadata = {
 }
 
 interface SearchParams {
+  [key: string]: string | undefined
   q?: string
   type?: string
   from?: string
