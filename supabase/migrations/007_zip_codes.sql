@@ -7,6 +7,9 @@ create table zip_codes (
   state text not null
 );
 
+alter table zip_codes enable row level security;
+create policy "zip_codes_public_read" on zip_codes for select using (true);
+
 create or replace function nearest_zip(
   user_lat numeric,
   user_lng numeric
