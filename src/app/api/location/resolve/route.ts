@@ -55,7 +55,8 @@ export async function POST(request: NextRequest) {
   const { data: nearest } = await supabase
     .rpc('nearest_zip', { user_lat: lat, user_lng: lng })
 
-  const label = nearest ? `${nearest.city}, ${nearest.state}` : 'GPS'
+  const row = Array.isArray(nearest) ? nearest[0] : nearest
+  const label = row ? `${row.city}, ${row.state}` : 'GPS'
 
   const cookieStore = await cookies()
   cookieStore.set('cc_loc', JSON.stringify({
