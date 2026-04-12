@@ -45,3 +45,6 @@ next-env.d.ts
 test-results/
 playwright-report/
 supabase/.temp/
+
+# ZIP code data (full production dataset is not committed)
+data/
