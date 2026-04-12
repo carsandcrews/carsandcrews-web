@@ -4,8 +4,10 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useCallback } from 'react'
 import { EventListItem } from '@/components/events/EventListItem'
 import { EventFilters } from '@/components/events/EventFilters'
+import { LocationFilter } from '@/components/events/LocationFilter'
 import { SearchBar } from '@/components/events/SearchBar'
 import type { EventType } from '@/lib/constants'
+import type { ResolvedCenter } from '@/lib/location/types'
 
 interface EventItem {
   id: string
@@ -25,8 +27,7 @@ interface EventsExploreClientProps {
   initialTypes: EventType[]
   currentPage: number
   totalPages: number
-  serverLocation?: string | null
-  sortByDistance?: boolean
+  center: ResolvedCenter | null
 }
 
 export function EventsExploreClient({
@@ -35,8 +36,7 @@ export function EventsExploreClient({
   initialTypes,
   currentPage,
   totalPages,
-  serverLocation,
-  sortByDistance
+  center
 }: EventsExploreClientProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -70,38 +70,26 @@ export function EventsExploreClient({
     router.push(buildUrl({ type: next.length > 0 ? next.join(',') : undefined }))
   }
 
-  function handleSortToggle() {
-    if (sortByDistance) {
-      router.push(buildUrl({ sort: 'date' }))
-    } else {
-      router.push(buildUrl({ sort: undefined }))
-    }
-  }
-
   return (
     <div className="space-y-6">
       <div onKeyDown={(e) => { if (e.key === 'Enter') handleSearchSubmit() }}>
-        <SearchBar value={query} onChange={handleSearch} location={serverLocation} />
+        <SearchBar
+          value={query}
+          onChange={handleSearch}
+          location={center?.label}
+        />
       </div>
+
+      <LocationFilter center={center} />
 
       <div className="flex items-center justify-between gap-4">
         <EventFilters selectedTypes={selectedTypes} onTypeToggle={handleTypeToggle} />
-        <div className="flex items-center gap-3 flex-shrink-0">
-          {serverLocation && (
-            <button
-              onClick={handleSortToggle}
-              className={`text-sm transition-colors duration-150 ${sortByDistance ? 'text-amber-500 font-semibold' : 'text-[#666] hover:text-[#999]'}`}
-            >
-              Near me
-            </button>
-          )}
-          <a
-            href="/events/map"
-            className="text-sm text-amber-500 hover:text-amber-400 transition-colors duration-150"
-          >
-            Map view
-          </a>
-        </div>
+        <a
+          href="/events/map"
+          className="text-sm text-amber-500 hover:text-amber-400 transition-colors duration-150 flex-shrink-0"
+        >
+          Map view
+        </a>
       </div>
 
       <div>
