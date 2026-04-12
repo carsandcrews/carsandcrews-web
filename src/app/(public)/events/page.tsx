@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
+import { headers, cookies } from 'next/headers'
 import { createServer } from '@/lib/supabase/server'
-import { parseVercelHeaders } from '@/lib/location/detect'
+import { resolveCenter } from '@/lib/location/resolve'
 import { EventsExploreClient } from './events-explore-client'
 import type { EventType } from '@/lib/constants'
+import type { ResolvedCenter } from '@/lib/location/types'
 
 export const metadata: Metadata = {
   title: 'Events | Cars & Crews',
@@ -16,7 +17,10 @@ interface SearchParams {
   from?: string
   to?: string
   page?: string
-  sort?: string
+  zip?: string
+  lat?: string
+  lng?: string
+  radius?: string
 }
 
 const PAGE_SIZE = 20
@@ -30,21 +34,24 @@ export default async function EventsExplorePage({
   const page = Math.max(1, parseInt(params.page || '1', 10))
   const offset = (page - 1) * PAGE_SIZE
 
-  const supabase = await createServer()
   const reqHeaders = await headers()
-  const location = parseVercelHeaders(reqHeaders)
+  const cookieStore = await cookies()
+  const center = await resolveCenter(params, cookieStore, reqHeaders)
 
-  const sortByDistance = location && params.sort !== 'date'
+  const supabase = await createServer()
 
-  let eventItems: { id: string; name: string; slug: string; date: string; city: string; state: string; eventType: EventType; stateCode: string; distance?: number | null }[]
+  let eventItems: {
+    id: string; name: string; slug: string; date: string;
+    city: string; state: string; eventType: EventType;
+    stateCode: string; distance?: number | null
+  }[]
   let totalPages = 1
 
-  if (sortByDistance && !params.q && !params.from && !params.to) {
-    // Use RPC for nearby events — supports distance sorting
+  if (center && !params.q && !params.from && !params.to) {
     const { data: nearbyData } = await supabase.rpc('nearby_events', {
-      user_lat: location.lat,
-      user_lng: location.lng,
-      radius_miles: 500,
+      user_lat: center.lat,
+      user_lng: center.lng,
+      radius_miles: center.radius,
       max_results: 200,
     })
 
@@ -52,7 +59,9 @@ export default async function EventsExplorePage({
 
     if (params.type) {
       const types = params.type.split(',')
-      filtered = filtered.filter((e: Record<string, unknown>) => types.includes(e.event_type as string))
+      filtered = filtered.filter((e: Record<string, unknown>) =>
+        types.includes(e.event_type as string)
+      )
     }
 
     totalPages = Math.ceil(filtered.length / PAGE_SIZE)
@@ -70,7 +79,6 @@ export default async function EventsExplorePage({
       distance: e.distance_miles as number,
     }))
   } else {
-    // Standard query — no location or explicit date sort or search active
     let query = supabase
       .from('events')
       .select('id, name, slug, date, end_date, city, state, event_type, is_charity, banner_url', { count: 'exact' })
@@ -113,8 +121,6 @@ export default async function EventsExplorePage({
     }))
   }
 
-  const locationStr = location ? `${location.city}, ${location.state}` : null
-
   return (
     <main className="min-h-screen bg-[#111113]">
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-7">
@@ -125,8 +131,7 @@ export default async function EventsExplorePage({
           initialTypes={(params.type?.split(',') as unknown as EventType[]) || []}
           currentPage={page}
           totalPages={totalPages}
-          serverLocation={locationStr}
-          sortByDistance={!!sortByDistance}
+          center={center}
         />
       </div>
     </main>
